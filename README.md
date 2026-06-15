@@ -1,7 +1,7 @@
 
   # KotulaPay Landing Page v4
 
-  This is a code bundle for KotulaPay Landing Page v4. 
+  This is a code for KotulaPay Landing Page v4. 
 
   ## Running the code
 
