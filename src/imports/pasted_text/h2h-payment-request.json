@@ -1,0 +1,588 @@
+H2H: Flow of Payments
+payment flow
+
+H2H: Diagram of Payment Flow
+payment flow
+
+H2H: Required Endpoints
+The external service must respond to the following endpoints:
+
+Path	Method	Description
+/pay	POST	Payment initiation
+/payout	POST	Payout
+/refund	POST	Refund
+/status	POST	Transaction status
+/confirm_secure_code	POST	3DS confirmation
+/resend_otp	POST	OTP confirmation
+/next_payment_step	POST	Additional async steps in 3DS
+H2H: Payment
+Request structure.
+
+The params object contains the following keys:
+
+settings: general gateway or environment settings
+params: payment method data (e.g. cardholder info, browser data, etc.)
+payment: payment-specific information (amount, currency, redirect URLs, token)
+processing_url: internal redirect URL after 3DS
+callback_url: URL where the payment result callback will be sent
+callback_3ds_url: 3DS-specific callback URL after challenge or fingerprinting
+method_name: action to be performed (e.g. "pay")
+{
+  "settings": {
+    "sandbox": true
+  },
+  "params": {
+    "pan": "4392963203551251",
+    "expires": "08/2025",
+    "holder": "John Doe",
+    "cvv": "196",
+    "email": "50-18@gmail.com",
+    "country": "AU",
+    "city": "Transmetropolitan",
+    "state": "AU",
+    "phone": "+77022579074",
+    "browser": {
+      "accept_header": "application/json, text/plain, */*",
+      "color_depth": "32",
+      "ip": "109.48.0.1",
+      "language": "us-US",
+      "screen_height": "1080",
+      "screen_width": "1920",
+      "tz": "-180",
+      "user_agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:92.0)",
+      "java_enabled": "true",
+      "window_width": "1240",
+      "window_height": "560"
+    },
+    "first_name": "Test",
+    "last_name": "Test2",
+    "extra_return_param": "_blank_"
+  },
+  "payment": {
+    "redirect_success_url": "https://success.com/?token=4gbk3dVf8QbdVp7KWCbKvHtgfXKtSWCk&type=pay&status=approve...",
+    "redirect_fail_url": "https://declined.com/?token=4gbk3dVf8QbdVp7KWCbKvHtgfXKtSWCk&type=pay&status=declined...",
+    "token": "4gbk3dVf8QbdVp7KWCbKvHtgfXKtSWCk",
+    "gateway_amount": 100000,
+    "gateway_currency": "EUR"
+  },
+  "processing_url": "http://business:4000/checkout_results/<token>/processing",
+  "callback_url": "http://business:4000/callbacks/v2/gateway_callbacks/<token>",
+  "callback_3ds_url": "http://business:4000/checkout_results/<token>/callback_3ds",
+  "method_name": "pay"
+}
+Available parameter fields
+Below is a list of possible parameters and their results that may be suitable for an external application.
+
+Field	Type	Description
+pan	String	Card PAN
+expires	String	Card expiration date
+holder	String	Card holder name
+cvv	String	Card CVV code
+email	String	Customer email
+country	String	Customer country
+city	String	Customer city
+state	String	Customer state
+postcode	String	Customer postal code
+street	String	Customer street address
+address	String	Customer address
+region	String	Customer region
+phone	String	Customer phone number
+otp	String	One-time password
+pin	String	Personal identification number
+bank_code	String	Bank code
+bank_account_number	String	Bank account number
+identify_type	String	Identification type
+identify_number	String	Identification number
+recurring	Boolean	Recurring payment flag
+need_confirmation	Boolean	Confirmation requirement
+browser	Object	Browser data (JSON object)
+country_code	String	Customer country code
+first_name	String	Customer first name
+father_name	String	Customer father's name
+last_name	String	Customer last name
+website	String	Customer website
+birthday	String	Customer birthday
+state	String	Customer state
+recurring_data	Object	Recurring payment data
+pending_url	String	URL for pending payments
+extra_return_param	String	Extra return parameter
+Available payment fields
+Field	Type	Description
+id	Integer	Payment ID (we don't use it field)
+status	String	Payment status
+token	String	Internal payment token
+currency	String	Origin payment currency
+product	String	Product name
+callback_url	String	Merchant callback URL
+redirect_success_url	String	URL for successful payment redirect
+redirect_fail_url	String	URL for failed payment redirect
+redirect_request	String	URL for redirect request (non used)
+merchant_private_key	String	Private key for Merchant record
+amount	Integer	Payment amount
+gatewayable_type	String	Name of gateway (e.g., `Gateway::TestpayPayment)
+gatewayable_id	Integer	ID of gateway record
+created_at	Datetime	Payment creation date
+updated_at	Datetime	Payment update date
+extra_return_param	String	Extra return parameter
+operation_type	String	Payment operation type (e.g., pay, refund, payout)
+order_number	String	Merchant order number
+declination_reason	String	Reason for payment declination
+lead_id	Integer	ID of the lead record
+ip	String	Customer IP address
+browser_info	String	Browser information
+bank_card_id	Integer	ID of the bank card record
+kind	String	Payment kind (e.g., wallet, direct)
+refund_id	Integer	ID of the refund payment record
+scoring_remark	String	Scoring remark
+country_code_by_BIN	String	Country code by BIN (e.g., US)
+country_code_by_phone	String	Country code by phone (e.g., US)
+country_code_by_IP	String	Country code by IP (e.g., US)
+business_account_legal_name	String	Business account legal name from merchant core settings
+business_account_profileID	String	Business account profile ID from merchant core settings
+card_masked_number	String	Masked card number (e.g., 1234****234)
+gateway_details	JSON	Gateway-specific details (containts gateway_ids, redirect_request and other data`)
+gateway_currency	String	Gateway currency after conversion
+gateway_amount	Integer	Gateway amount after conversion
+details	JSON	Additional details (e.g., request data, error data etc.)
+scoring_action	String	Scoring action (e.g., success)
+scoring_action_log	JSON	Scoring action log (e.g., {riskscore: {...}})
+gateway_alias	String	Gateway alias (e.g., testpay)
+card_brand_name	String	Card brand name (e.g., Visa, MasterCard)
+routing_logs	JSON	Routing logs (e.g., {prev_route: null {next_route...}})
+gateway_token	String	External gateway ID (e.g., 123456789)
+two_stage_mode	Boolean	Indicates if the payment is in two-stage mode
+settings	JSON	Payment settings (e.g., {status_checker_time_rates: {...}})
+rrn	String	RRN (Retrieval Reference Number)
+commission_data	JSON	Commission data (e.g., {commission_fee: 10, commission_amount: 10})
+notification_settings	JSON	Notification settings (e.g., {"recipient"=>"test@test.tt", "allow_notification"=>true})
+customer_country	String	Customer country (e.g., US)
+trader_id	Integer	Trader ID (e.g., 123456)
+merchant_url	String	Merchant URL (e.g., http://example.com)
+reference	String	Reference (e.g., 123456789)
+locale	String	Locale (e.g., en-US)
+result must be either success or declined
+If status: approved is returned, the transaction is still not finalized until a callback is received or status is polled
+Response Fields:
+{
+  "status": "approved",
+  "gateway_token": "4409b224-b1a7-41e5-8216-7c98560f4f08",
+  "result": "success",
+  "card_3ds_enrolled": true,
+  "processingUrl": "http://business:4000/checkout_results/<token>/processing",
+  "redirect_request": {
+    "url": "http://business:4000/checkout_results/<token>/processing",
+    "type": "post_iframes",
+    "iframes": [
+      {
+        "url": "http://test:9090/3ds",
+        "data": {
+          "creq": "<creq-token>",
+          "token": "<token>"
+        }
+      }
+    ]
+  },
+  "logs": [
+    {
+      "gateway": "testing",
+      "request": {
+        "url": "https://some.site",
+        "params": {
+          "callback_url": "https://test.com",
+          "amount": 1234,
+          "currency": "USD",
+          "extra_return_param": "Tinkoff",
+          "order_number": "AutoTest#Payout-5264998"
+        }
+      },
+      "status": 200,
+      "response": "{status: \"OK\"}",
+      "kind": "request",
+      "created_at": "2025-05-15T18:21:55+02:00",
+      "duration": 0.5
+    }
+  ]
+}
+Response structure:
+
+gateway_token: External token or ID of the payment
+card_enrolled: Indicates if the card requires 3DS flow
+redirect_request: Redirect info required for 3DS payments
+logs: Request/response logs from the integration
+redirect_request
+Field	Type	Description	Notes
+redirect_request.url	String	Redirect or iframe processing URL	For post_iframes: always /checkout_requests/<token>/processing
+redirect_request.type	String	Determines the redirect logic	One of: post_iframes, get_with_processing, get, post, redirect_html
+redirect_request.wait_milliseconds	Integer	Delay before marking payment as processed and triggering next_payment_step asynchronously	Optional
+redirect_request.params	Object	Form data (used in all types except post_iframes)	Optional
+redirect_request.iframes	Object	Used for post_iframes type only	Required for iframe flows
+redirect_request.iframes.url	String	ACS backend URL	Required
+redirect_request.iframes.data	Object	Parameters used for fingerprinting and rendering the ACS form	Required
+logs
+Field	Type	Description	Notes
+logs.request	Object	Outgoing request sent to the provider	Includes headers, body, etc.
+logs.response	Object	Response received from the provider	Includes body, status, etc.
+logs.status	String	HTTP status code	e.g. "200", "400"
+logs.created_at	Datetime	Timestamp of request creation	ISO 8601
+logs.updated_at	Datetime	Timestamp of latest update to the request lifecycle	ISO 8601
+logs.kind	String	Name of the endpoint or request type	e.g. "pay", "status"
+logs.gateway	String	Name of the integration/gateway	Optional
+logs.duration	Float	Duration of the request in seconds	Optional
+logs.direction	String	Direction: out for external request, in for callback	Required
+Declined response:
+HTTP status: Anything but 200
+Error field:
+error (String)
+or errors (Array<String>)
+H2H: Payout
+Request structure.
+{
+    "params": {
+        "card": {
+            "pan": "4627342642639018",
+            "expires": "04/2022"
+        },
+        "customer": {
+            "email": "test@test.com",
+            "address": "Earth",
+            "ip": "1.1.1.1"
+        },
+        "extra_return_param": "123",
+        "order_number": "Payout-5264998"
+    },
+    "payment": {
+        "token": "TE8ovE9Bngh8XVzozoLdXwNhQ2F9774L",
+        "gateway_amount": 100,
+        "gateway_currency": "EUR"
+    },
+    "settings": {
+      "sandbox": true
+    },
+    "processing_url": "http://business:4000/checkout_results/TE8ovE9Bngh8XVzozoLdXwNhQ2F9774L/processing",
+    "callback_url": "http://business:4000/callbacks/v2/gateway_callbacks/TE8ovE9Bngh8XVzozoLdXwNhQ2F9774L",
+    "method_name": "payout"
+}
+Payout fields mostly mirror the payment request (see above).
+
+The params object contains the following keys:
+
+settings: general gateway or environment settings
+params: payment method data (e.g. cardholder info, browser data, etc.)
+payment: payment-specific information (amount, currency, redirect URLs, token)
+processing_url: internal redirect URL after 3DS
+callback_url: URL where the payment result callback will be sent
+callback_3ds_url: 3DS-specific callback URL after challenge or fingerprinting
+method_name: action to be performed (e.g. "payout")
+Available parameter fields
+Below is a list of possible parameters and their results that may be suitable for an external application.
+
+Field	Type	Description
+card	String	Card object
+customer	String	Customer object
+order_number	String	Merchant order number
+extra_return_param	String	Extra return parameter
+Available payment fields
+Field	Type	Description
+id	Integer	Payment ID (we don't use it field)
+status	String	Payment status
+token	String	Internal payment token
+currency	String	Origin payment currency
+product	String	Product name
+callback_url	String	Merchant callback URL
+redirect_success_url	String	URL for successful payment redirect
+redirect_fail_url	String	URL for failed payment redirect
+redirect_request	String	URL for redirect request (non used)
+merchant_private_key	String	Private key for Merchant record
+amount	Integer	Payment amount
+gatewayable_type	String	Name of gateway (e.g., `Gateway::TestpayPayment)
+gatewayable_id	Integer	ID of gateway record
+created_at	Datetime	Payment creation date
+updated_at	Datetime	Payment update date
+extra_return_param	String	Extra return parameter
+operation_type	String	Payment operation type (e.g., pay, refund, payout)
+order_number	String	Merchant order number
+declination_reason	String	Reason for payment declination
+lead_id	Integer	ID of the lead record
+ip	String	Customer IP address
+kind	String	Payment kind (e.g., wallet, direct)
+refund_id	Integer	ID of the refund payment record
+scoring_remark	String	Scoring remark
+country_code_by_BIN	String	Country code by BIN (e.g., US)
+country_code_by_phone	String	Country code by phone (e.g., US)
+country_code_by_IP	String	Country code by IP (e.g., US)
+business_account_legal_name	String	Business account legal name from merchant core settings
+business_account_profileID	String	Business account profile ID from merchant core settings
+card_masked_number	String	Masked card number (e.g., 1234****234)
+gateway_details	JSON	Gateway-specific details (containts gateway_ids, redirect_request and other data`)
+gateway_currency	String	Gateway currency after conversion
+gateway_amount	Integer	Gateway amount after conversion
+details	JSON	Additional details (e.g., request data, error data etc.)
+gateway_alias	String	Gateway alias (e.g., testpay)
+card_brand_name	String	Card brand name (e.g., Visa, MasterCard)
+gateway_token	String	External gateway ID (e.g., 123456789)
+two_stage_mode	Boolean	Indicates if the payment is in two-stage mode
+settings	JSON	Payment settings (e.g., {status_checker_time_rates: {...}})
+rrn	String	RRN (Retrieval Reference Number)
+commission_data	JSON	Commission data (e.g., {commission_fee: 10, commission_amount: 10})
+notification_settings	JSON	Notification settings (e.g., {"recipient"=>"test@test.tt", "allow_notification"=>true})
+customer_country	String	Customer country (e.g., US)
+merchant_url	String	Merchant URL (e.g., http://example.com)
+reference	String	Reference (e.g., 123456789)
+locale	String	Locale (e.g., en-US)
+Payout Response
+{
+  "status": "approved",
+  "gateway_token": "f268ae4e-e5b4-451d-a46c-7c7b44d47195",
+  "result": "success",
+  "processingUrl": "http://business:4000/checkout_results/<token>/processing",
+  "logs": [...]
+}
+The response object contains the following keys:
+
+status: response status (e.g. "ok")
+gateway_token: unique transaction identifier from the external gateway
+result: outcome of the transaction (e.g. "success", "declined")
+processingUrl: internal redirect URL used during processing
+logs: array of request/response logs related to the transaction
+P2P: Flow of Payments
+payment flow
+
+P2P: Diagram of Payment Flow
+payment flow
+
+P2P: Required Endpoints
+The external service must respond to the following endpoints:
+
+Path	Method	Description
+/pay	POST	Pay request
+/status	POST	Check status
+/payout	POST	Payout request
+/refund	POST	Refund request
+/confirm_secure_code	POST	Confirm OTP secret key
+/p2p_redirect	GET	Redirect to charge page
+/pay_by_form	POST	Approve payment by form
+P2P: Payment
+The format of the P2P request, to the application, has a similar structure, as host2host mode E-Com (described above). However, a new block is added - bank_account, which contains information about requisites details.
+
+{
+    "product": "Tests",
+    "order_number": "1234566789",
+    "amount": 22200,
+    "currency": "EUR",
+    "redirect_success_url": "https://success.com/",
+    "redirect_fail_url": "https://declined.com/",
+    "callback_url": "https://test.io/callback",
+    "bank_account": {
+        "requisite_type": "card"
+    },
+    "customer": {
+        "email": "dog@gmail.com"
+    }
+}
+Section: customer
+Field	Type	Description
+customer.ip	String	Client's IP address
+customer.phone	String	Client's phone number
+customer.name	String	Client's full name
+customer.email	String	Client's email address
+customer.client_id	String	Client's internal ID
+customer.first_name	String	Client's first name
+customer.last_name	String	Client's last name
+customer.middle_name	String	Client's middle name
+customer.address	String	Client's address
+customer.city	String	Client's city
+customer.state	String	Client's state or region
+customer.postcode	String	Client's postal code
+customer.country	String	Client's country
+customer.locale	String	Client's language locale
+customer.userid	String	Client's user ID in the merchant system
+customer.mode_of_payment	String	Mode of payment
+customer.coin	String	Currency
+customer.payment_system_id	String	ID of the payment system
+customer.card_bin	String	BIN of the card
+customer.birthday	String	Client's date of birth
+Section: bank_account
+Field	Type	Description
+bank_account.bank_account	String	Bank account number
+bank_account.account_holder	String	Account holder's name
+bank_account.bank_state	String	Bank's state
+bank_account.bank_city	String	Bank's city
+bank_account.ifsc_code	String	IFSC code (India specific)
+bank_account.bank_address	String	Bank's address
+bank_account.account_number	String	Account number
+bank_account.account_name	String	Account holder name
+bank_account.requisite_type	String	Type of requisite
+bank_account.bank_name	String	Bank name
+Section: default
+Field	Type	Description
+default.recurring	Boolean	Indicates if the payment is recurring
+default.website	String	Website of the merchant
+default.extra_return_param	String	Additional return parameters
+default.pending_url	String	Immediate redirect URL for waiting page
+default.need_confirmation	Boolean	Indicates two-step payment requirement
+Server Response for P2P Payments
+{
+  "status": "approved",
+  "gateway_token": "539VLCBtWfKsJcU4SJH3gVqHNXsaGbfC",
+  "result": "pending",
+  "requisites": {
+    "card": "4617611794313933",
+    "holder": "Clark Kent",
+    "bank_name": "dogbank"
+  },
+  "redirectRequest": {
+    "url": null,
+    "type": "post_iframes",
+    "iframes": [
+      {
+        "url": null,
+        "data": {
+          "token": "539VLCBtWfKsJcU4SJH3gVqHNXsaGbfC"
+        }
+      }
+    ]
+  },
+  "logs": [...]
+}
+Field	Type	Description
+redirect_request	Object	Contains the URL to redirect the user to the P2P payment page. Usually excluded when wrapped_to_json is enabled in settings.
+result	String	approved / declined / pending
+requisites	Object	Contains trader's requisites, displayed on the form or returned in JSON.
+gateway_token	String	Token from the external gateway
+logs	Array	Logs of the operation. Refer to the standard logs structure.
+Callbacks
+ReactivePay receives asynchronous notifications (callbacks) about payment events. These callbacks must be authenticated, validated, and follow specific payload and security requirements.
+
+Callback Endpoint
+Endpoint format:
+
+POST /callbacks/v2/gateway_callbacks/:token
+
+Where token is the Payment.token of the current transaction.
+
+Authentication & JWT Format
+Callbacks are authenticated using a JWT token in the Authorization header:
+
+Authorization: Bearer <JWT_TOKEN>
+
+JWT Header:
+Encryption algorithm: "HS512"
+JWT Payload:
+{
+  "status": "approved",
+  "currency": "USD",
+  "amount": 100,
+  "secure": {
+    "encrypted_data": "<base64-string>",
+    "iv_value": "<base64-string>"
+  }
+}
+secure contains the encrypted merchant_key (AES-256-CBC).
+HS512 signature uses settings['sign_key'] as the secret.
+Encrypting the Merchant Key
+Use AES-256-CBC encryption with the system master key
+openssl enc -aes-256-cbc -in merchant_key.txt -out encrypted_key.bin -K <master_token> -iv <iv_value>
+
+function processJwt(jwt_token, sign_key):
+    # Step 1: Decode JWT and extract 'secure' block
+    base64_payload = jwt_token.split('.')[1]
+    decoded_payload = Base64Decode(base64_payload)
+    json_payload = ParseJSON(decoded_payload)
+    secure_block = json_payload["secure"]
+
+    # Step 2: Decrypt merchant key
+    encrypted_data = secure_block["encrypted_data"]
+    iv = secure_block["iv_value"]
+    master_key = GetConfig("master_token")[0:32]
+
+    merchant_private_key = AES256Decrypt(
+        key = master_key,
+        iv = iv,
+        data = encrypted_data
+    )
+
+    # Step 3: Validate signature
+    is_valid = JwtVerify(token = jwt_token, secret = sign_key, algorithm = "HS512")
+
+    return {
+        "merchant_private_key": merchant_private_key,
+        "secure_block": secure_block,
+        "jwt_valid": is_valid
+    }
+Example Output
+{ "encrypted_data": "<Base64>", "iv_value": "<Base64>" }
+
+Server-side Validation Steps
+Payload Schema Validation
+Field	Type	Constraints / Pattern	Required	Description
+token	String	Length: 32	Yes	Unique token identifying the payment
+gateway_token	String	—	No	Token from the external gateway
+status	String	approved / declined / refunded	Yes	Result status of the payment
+refund	Boolean	—	No	Indicates if this is a refund
+reason	String	Min length: 5	No	Decline or refund reason
+currency	String	Length: 3–4	Yes	ISO currency code (e.g. USD, EUR)
+amount	Integer	—	Yes	Payment amount in minor units
+gateway_callback	Object	—	No	Full provider response (if needed)
+Example CURL Request
+curl --location 'http://business:4000/callbacks/v2/gateway_callbacks/gJJN4VytdaNxivS5kcvWkeMb448EWJQc' 
+     --header 'Content-Type: application/json' 
+     --header 'Authorization: Bearer <JWT_TOKEN>' 
+     --data '{
+        "status": "approved",
+        "currency": "USD",
+        "amount": 100
+      }'
+Success:
+HTTP 200
+Response: { success: true }
+Errors:
+Code	Message
+401	Authorization token is missing
+422	Invalid JWT signature
+422	Invalid payload schema
+Logs and Debugging
+Each callback is logged via InteractionLogger with: - request (raw & parsed) - response - direction: "in" - timestamps and duration
+
+Common Pitfalls
+Incorrect master token for AES key
+Missing fields in secure payload
+Expired or mismatched JWT tokens
+Schema violations (e.g. short token, missing currency)
+Useful References
+JWT.io
+AES encryption Wiki
+Status
+Reactivepay also has a transaction status polling functionality. The endpoint on the application side should respond to the /status path.
+
+Request body
+{
+    "settings": {
+        "bearer_token": "cd6fb795fd41348df8f0"
+    },
+    "payment": {
+        "gateway_token": "H97UakuQMh17THitGy3Bzu9bX1YSfCEv"
+    },
+    "method_name": "status"
+}
+Field	Type	Description
+settings	Object	General gateway or environment settings
+settings.bearer_token	String	Authorization bearer token
+payment	Object	Payment-specific information
+payment.gateway_token	String	Unique identifier for the transaction
+method_name	String	Name of the method to be executed (e.g., 'status')
+Response body
+{
+    "result": "OK",
+    "status": "pending",
+    "details": "Transaction is pending",
+    "amount": 22200,
+    "currency": "RUB",
+    "logs": [...]
+}
+Field	Type	Description
+result	String	Result status of the transaction (e.g. OK, ERROR)
+status	String	Current status of the transaction (e.g. pending, approved)
+details	String	Additional status details or message
+amount	Integer	Amount of the transaction in minor units
+currency	String	Currency of the transaction
+logs	Array	Logs of the transaction process

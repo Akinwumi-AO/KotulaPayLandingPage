@@ -1,0 +1,139 @@
+Dictionaries
+Errors
+If any method failed, the JSON response with status code 403/502 returned that specified the problem.
+
+Return status 403 and JSON:
+Copy
+
+{'success': false, 'result': 1, 'status': 403, 'errors': [{'code': 'merchant_not_found', 'kind': 'api_error'}]}
+
+{'success': false, 'result': 1, 'status': 403, 'errors': [{'code': 'user_not_found', 'kind': 'api_error'}]}
+
+{'success': false, 'result': 1, 'status': 502, 'errors': [{'code': 'fetch_processing_url_error', 'kind': 'api_error'}]}
+
+{'success': false, 'result': 1, 'status': 502, 'errors': [{'code': 'invalid_json', 'kind': 'api_error'}]}
+
+{'success': false, 'result': 1, 'status': 403, 'errors': [{'code': 'balance_less_than_amount', 'kind': 'processing_error'}]}
+
+{'success': false, 'result': 1, 'status': 403, 'errors': [{'code': 'absent_keys:pay/payout', 'kind': 'settings_error'}]}
+
+{'success': false, 'result': 1, 'status': 403, 'errors': [{'code': 'absent_keys:currency', 'kind': 'settings_error'}]}
+
+{'success': false, 'result': 1, 'status': 403, 'errors': [{'code': 'auth_header_not_found', 'kind': 'authentication_error'}]}
+
+{'success': false, 'result': 1, 'status': 403, 'errors': [{'code': 'unknown_auth_header', 'kind': 'authentication_error'}]}
+
+{'success': false, 'result': 1, 'status': 403, 'errors': [{'code': 'amount_less_than_minimum', 'kind': 'invalid_request_error'}]}
+
+{'success': false, 'result': 1, 'status': 403, 'errors': [{'code': 'customer_email_not_found', 'kind': 'invalid_request_error'}]}
+
+{'success': false, 'result': 1, 'status': 403, 'errors': [{'code': 'absent_host2host_mode', 'kind': 'invalid_request_error'}]}
+
+{'success': false, 'result': 1, 'status': 403, 'errors': [{'code': 'payment_in_final_state', 'kind': 'invalid_request_error'}]}
+
+{'success': false, 'result': 1, 'status': 403, 'errors': [{'code': 'payment_not_found', 'kind': 'invalid_request_error'}]}
+
+{'success': false, 'result': 1, 'status': 403, 'errors': [{'code': 'settings_are_absent', 'kind': 'invalid_request_error'}]}
+Payment states
+State	Final	Description
+init	no	Request to API will initiate payments.
+pending	no	User redirected to the ReactivePay Checkout facility during processing.
+approved	yes	Successfully completed payment.
+declined	yes	Unsuccessful payment.
+expired	no	The transaction has expired due to timeout but may still be processed.
+Kinds of errors
+Kind	Description
+api_error	Indicate rare occasions such as an ReactivePay API server technicality.
+authentication_error	Authentication request failure.
+invalid_request_error	Invalid parameters which produce invalid requests.
+processing_error	Processing the payment generated an error.
+settings_error	Incorrect settings.
+gateway_error	Gateway responded with an error.
+http_error	HTTP/HTTPS error.
+Codes of errors
+Api errors
+State	Final	Description
+merchant_not_found	yes	No merchant found with this token.
+fetch_processing_url_error	no	Failed to fetch processing URL.
+invalid_json	no	Invalid JSON from provider.
+user_not_found	yes	No information found about the merchant with merchant_private_key.
+card_token_is_blank	no	Card token is blank.
+payment_already_has_pending_dispute	yes	Payment already has a pending dispute.
+content_type_not_allowed	no	Request content_type not allowed.
+requisite_not_found	yes	Required requisite not found.
+action_skipped_due_to_debounce	no	Action skipped due to debounce.
+core_api_error	no	Core API returned error.
+no_route_match	yes	No route match for request.
+order_number_already_exists	yes	Repeating an order of already identified order number.
+Settings errors
+State	Final	Description
+absent_keys:pay/payout	no	Absent pay or payout key.
+absent_keys:currency	no	Absent or incorrect currency value.
+settings_are_absent	yes	Absent settings.
+settings_for_placeholder_are_absent	yes	Settings for <...> are absent (placeholder for provider-specific key).
+Authentication errors
+State	Final	Description
+auth_header_not_found	no	Absent Authorization key.
+unknown_auth_header	no	Unknown or invalid Authorization header.
+incorrect_private_key	no	The current private key cannot identify the user.
+Invalid request errors
+State	Final	Description
+amount_less_than_minimum	no	Minimum payout amount has not been requested.
+customer_email_not_found	no	Absent customer email.
+absent_host2host_mode	no	Absent allow_host2host=true in settings when making request without card.
+payment_in_final_state	yes	Payment has final status.
+payment_not_found	yes	Payment not found.
+token_description_document_are_required	no	Required params [:token, :description, :document] are missing.
+filtered_traders_is_missing	no	Required param filtered_traders is missing.
+bank_name_is_not_valid_choice	no	bank_name value not in allowed list.
+Processing errors
+State	Final	Description
+balance_less_than_amount	no	Payout cannot be completed due to insufficient funds.
+cant_create_dispute	yes	Cannot create dispute.
+amount_no_money	yes	Insufficient funds.
+no_money_available_on_refund	yes	No money available on refund.
+commission_not_received	yes	Commission not received.
+incorrect_amount	no	Absent or incorrect amount value.
+Gateway errors
+State	Final	Description
+gateway_response_error: error	no	General gateway error.
+gateway_response_error: unsupported_traffic	yes	Unsupported traffic type by gateway.
+gateway_response_error: type_pay_card_is_not_a_valid_choice	yes	Invalid value for type_pay / card choice.
+gateway_response_error: not_found_rate	yes	Rate not found in gateway.
+gateway_response_error: trader_not_found	yes	Trader not found in gateway.
+gateway_response_error: change_of_amount_is_not_supported	yes	Change of amount not supported by gateway.
+HTTP errors
+State	Final	Description
+http_422_filtered_traders_is_missing	no	422 response: filtered_traders is missing.
+http_422_bank_name_is_not_in_allowed_list	no	422 response: bank_name not in allowed list.
+Operators
+Operator
+Code:
+Copy
+
+OkHttpClient client = new OkHttpClient();
+
+Request request = new Request.Builder()
+.url("https://business.kotulapay.com/api/v1/operator?phone=77775415544")
+.get()
+.addHeader("content-type", "application/json")
+.addHeader("authorization", "Bearer merchant_private_key")
+.build();
+
+Response response = client.newCall(request).execute();
+Return status 200 and JSON:
+Copy
+
+{
+  "success": true | false,
+  "status": 200,
+  "operator": "beeline"
+}
+Return operator by phone
+
+HTTP Request via SSL
+GET '/api/v1/operator'
+
+Query Parameters
+Parameter	Mandatory	Description
+phone	yes	Phone number.

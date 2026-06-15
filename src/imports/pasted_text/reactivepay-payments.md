@@ -1,0 +1,393 @@
+Payments
+ReactivePay payment processing REST API.
+
+Create
+Code:
+Copy
+
+curl "https://business.reactivepay.com/api/v1/payments" \
+    -X POST \
+    -H "Authorization: Bearer merchant_private_key" \
+    -H "Content-Type: application/json" -d '{
+        "product" : "Your Product",
+        "amount" : "1000",
+        "currency" : "CNY",
+        "redirectSuccessUrl" : "https://your-site.com/success",
+        "redirectFailUrl" : "https://your-site.com/fail",
+        "extraReturnParam" : "your order id or other info",
+        "pendingUrl" : "https://your-site.com/pending",`
+        "expires_at": 5,
+        "orderNumber" : "your order number",
+        "locale": "zh"
+
+    }'
+Return status 200 and JSON:
+Copy
+
+{
+  "success": true | false,
+  "errors": [],
+  "token": "[payment token]",
+  "processingUrl": "https://business.reactivepay.com/p/[payment token]",
+  "payment": {
+    "amount": "10020",
+    "currency": "CNY",
+    "status": "init"
+  },
+  "redirectRequest": {
+    "url": "[redirect url, for example ACS URL for 3ds]",
+    "params": {
+      "PaReq": "[PaReq for current payment]",
+      "TermUrl": "https://business.reactivepay.com/checkout_results/[payment token]/callback_3ds"
+    },
+    "type": "post"
+  }
+}
+Initialize payments - to begin receiving payments, you must first call using the following script. This will enable you to obtain a payment token, which will be required later to complete API integration.
+
+HTTP Request via SSL
+POST '/api/v1/payments'
+
+Query Parameters
+Parameter	Mandatory	Description	Validation
+product	yes	Product name (Service description) (example: 'iPhone').	minLength: 5, maxLength: 255
+amount	yes	Payment amount in cents (10020), except JPY	minLength: 1, maxLength: 32
+currency	yes	Currency code (CNY, EUR, USD, JPY).	minLength: 3, maxLength: 3
+callbackUrl	yes	The server URL a merchant will be notified about a payment finalisation	Valid URI format
+redirectSuccessUrl	no	The URL a customer will be redirected to in the case of successfull payment	Valid URI format
+redirectFailUrl	no	The URL a customer will be redirected to in the case of payment error or failure	Valid URI format
+pendingUrl	no	The URL a customer will be redirected to the specific page in the case of pending payment instead built-in checkout_resault_page	Valid URI format
+extraReturnParam	no	Bank/Payment method list, description, etc	minLength: 1, maxLength: 1024
+expires_at	no	Expired payment time for requests without a bank card	minLength: 1
+orderNumber	no	The current order number from a company system.	minLength: 3, maxLength: 255 (string)
+locale	no	The locale is used on a payment page by default. Currently supported locales: en, zh and jp from ISO 639-1.	minLength: 2, maxLength: 5 (string)
+walletToken	no	Set this parameter when making recurring payment from a customer’s wallet. A customer will receive notification and has to confirm the payment.	returns by API for recurring payments only
+recurring	no	Set this parameter to true when initializing recurring payment.	boolean
+recurringToken	no	Set this parameter when making recurring payment previously initialized with recurring param.	returns by API for recurring payments only
+needConfirmation	no	Set this parameter whe making payment in two steps (preAuth and confirm/decline)	
+card	no	Card object for Host2Host payments.	
+customer	no	Customer object for Host2Host payments.	
+recurring_data	no	Recurring data object for Host2Host payments.	
+merchantUrl	no	Param to control traffic from aggregators	
+Card Object Parameters
+Parameter	Mandatory	Description	Validation
+pan	yes	Customer’s card number (PAN). Any valid card number, may contain spaces	Valid card number (16-19 digits)
+expires	yes	Customer’s card expiration date. Format: mm/yyyy	mm/yyyy format
+holder	yes	Customer’s cardholder name. Any valid cardholder name	minLength: 5, maxLength: 50
+cvv	yes	Customer’s CVV2 / CVC2 / CAV2	minLength: 3, maxLength: 3 Only digits (\d+)
+Customer Object Parameters (optional)
+Parameter	Mandatory	Description	Validation
+email	yes	Customer’s email, is mandatory if Customer object posted on a request	Valid email format
+address	no	Customer's billing address	minLength: 5, maxLength: 55
+country	no	Customer's billing country	ISO country code format "GB"
+city	no	Customer's billing city	minLength: 4, maxLength: 55
+region	no	Customer's billing region	minLength: 5, maxLength: 55
+postcode	no	Customer's billing ZipCode	minLength: 4, maxLength: 55
+phone	no	Customer's billing phone number	minLength: 6, maxLength: 20
+ip	no	Customer IP address	Valid IP address format (XX.XX.XX.XX)
+browser	no	Customer browser object for 3ds2 payments.	
+Customer browser object for 3ds2 payments (optional)
+Parameter	Mandatory	Description	Example
+accept_header	no	Browser's content type	text/html
+color_depth	no	Browser's color depth value	32
+ip	no	Browser's ip	177.255.255.35
+language	no	Browser's language	ru
+screen_height	no	Browser's screen height	1080
+screen_width	no	Browser's screen width	1920
+tz	no	Browser's time zone	180
+user_agent	no	Browser's user agent	Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:96.0) Gecko/20100101 Firefox/96.0
+java_enabled	no	Is java enabled	true
+javascript_enabled	no	Is javascript enabled	true
+window_width	no	Browser's window width	1920
+window_height	no	Browser's bilwindowling height	1080
+Recurring data object for payments (optional)
+Parameter	Mandatory	Description	Validation
+days	no	Customer days object for payments.	Number of days between authorizations from 1
+exp_date	no	Customer exd_date object for payments.	Period of validity of periodic payments in format YYYYMMDD
+Payments Providers
+Code:
+Copy
+
+Return status 200 and JSON:
+Copy
+
+{
+  "success": true | false,
+  "errors": [],
+  "token": "[payment token]",
+  "processingUrl": [
+        {
+            "webmoney": "http://business.reactivepay.com/p/165998589a413b56ae72fbfdc15b016b/webmoney?locale=en"
+        },
+        {
+            "bank_card": "http://business.reactivepay.com/p/165998589a413b56ae72fbfdc15b016b/bank_card?locale=en"
+        },
+        {
+            "qiwi_wallet": "http://business.reactivepay.com/p/165998589a413b56ae72fbfdc15b016b/qiwi_wallet?locale=en"
+        },
+        {
+            "skrill_wallet": "http://business.reactivepay.com/p/165998589a413b56ae72fbfdc15b016b/skrill_wallet?locale=en"
+        }
+  ],
+  "selectorURL": "https://business.reactivepay.com/select/[payment token]/",
+  "payment": {
+    "amount": "10020",
+    "currency": "CNY",
+    "status": "init"
+  },
+  "redirectRequest": {
+    "url": "[redirect url, for example ACS URL for 3ds]",
+    "params": {
+      "PaReq": "[PaReq for current payment]",
+      "TermUrl": "https://business.reactivepay.com/checkout_results/[payment token]/callback_3ds"
+    },
+    "type": "post"
+  }
+}
+In case multiple payment providers enabled to a merchant account, Create payment reponse JSON will have processingUrl object represented as an array of available payment providers (please refer to JSON response). Use those URLs to redirect your customer to a payment provider (method).
+
+List of payment providers
+In case you want a customer to choose a payment provider (method) it might be convenient to use a specific page (widget) with payment provider list, which is availabe by "selectorURL" parameter in JSON response object
+
+List
+Code:
+Copy
+
+curl "https://business.reactivepay.com/api/v1/payments?dateFrom=2016-05-11&page=1&perPage=1" \
+    -H "Authorization: Bearer merchant_private_key"
+Return status 200 and JSON:
+Copy
+
+{
+  "success": true | false,
+  "errors": [],
+  "status": 200,
+  "totalCount": 10,
+  "curentPage": 1,
+  "perPage": 1,
+  "totalPage": 10,
+  "payments": [
+    {
+      "id": 1,
+      "status": "sent",
+      "token": "[payment token]",
+      "currency": "CNY",
+      "product": "Your Product",
+      "redirect_success_url": "https://your-site.com/success",
+      "redirect_fail_url": "https://your-site.com/fail",
+      "amount": 10000,
+      "created_at": "2016-06-27T14:13:00.273Z",
+      "updated_at": "2016-06-27T14:15:44.715Z",
+      "extra_return_param": "your order id or other info",
+      "operation_type": "pay",
+      "order_number": 1
+    }
+  ]
+}
+Payments List - this is the method used to display the list of returned payments.
+
+HTTP Request via SSL
+GET '/api/v1/payments'
+
+Query Parameters
+Parameter	Description	Required
+dateFrom	Date from (example: '2015-01-01')	No
+dateTo	Date to (example: '2015-01-02')	No
+page	Page number (default: 1)	No
+perPage	Payment per page (max: 500, default: 20)	No
+operationType	Operation type (Available values: pays, payouts, all)	No
+orderNumber	Merchant's order number	No
+Get
+Code:
+Copy
+
+curl "https://business.reactivepay.com/api/v1/payments/[payment_token]" \
+    -H "Authorization: Bearer merchant_private_key"
+Return status 200 and JSON:
+Copy
+
+{
+    "success": true | false,
+    "errors": [],
+    "status": 200,
+    "payment": {
+      "id": 2599,
+      "status": "pending | approved | declined",
+      "token": "[payment token]",
+      "currency": "[payment currency]",
+      "product": "[product description]",
+      "callback_url": "[callback/notification url]",
+      "redirect_success_url": "success redirection url",
+      "redirect_fail_url": "fail redirection url",
+      "amount": 0,
+      "created_at": "[creation date]",
+      "updated_at": "[last status update date]",
+      "extra_return_param": "[extra params, can be use to payment identification in merchat system]",
+      "operation_type": "pay | payout",
+      "order_number": "[merchant's order number]",
+      "commission_data": {
+                  "commission_value": 0.0,
+                  "commission_fee": 0.0,
+                  "commission_amount": 0.0
+              }
+    }
+}
+Payment Get - this is the method used to retrieve information about single payment.
+
+HTTP Request via SSL
+GET '/api/v1/payments/[payment_token]'
+
+Confirm Two-Step
+Code:
+Copy
+
+curl "https://business.reactivepay.com/api/v1/payments/confirm" \
+    -X POST \
+    -H "Authorization: Bearer merchant_private_key" \
+    -H "Content-Type: application/json" -d '{
+        "token" : "Your Product"
+    }'
+Return status 200 and JSON:
+Copy
+
+{
+  "success": true | false,
+  "result": 0,
+  "status": 200,
+  "payment": {
+    "amount": 100,
+    "gateway_amount": 100,
+    "currency": "USD",
+    "status": "approved|declined",
+    "two_stage_mode": true
+  }
+}
+Confirm Two-Step payment by providing a payment token.
+
+HTTP Request via SSL
+POST '/api/v1/payments/confirm'
+
+Query Parameters
+Parameter	Mandatory	Description
+token	yes	Payment token.
+Decline Two-Step
+Code:
+Copy
+
+curl "https://business.reactivepay.com/api/v1/payments/decline" \
+    -X POST \
+    -H "Authorization: Bearer merchant_private_key" \
+    -H "Content-Type: application/json" -d '{
+        "token" : "Your Product"
+    }'
+Return status 200 and JSON:
+Copy
+
+{
+  "success": true | false,
+  "result": 0,
+  "status": 200,
+  "payment": {
+    "amount": 100,
+    "gateway_amount": 100,
+    "currency": "USD",
+    "status": "approved|declined",
+    "two_stage_mode": true
+  }
+}
+Decline Two-Step payment by providing a payment token.
+
+HTTP Request via SSL
+POST '/api/v1/payments/decline'
+
+Query Parameters
+Parameter	Mandatory	Description
+token	yes	Payment token.
+Get/Order
+Code:
+Copy
+
+curl "https://business.reactivepay.com/api/v1/payments/order/[order_number]" \
+    -H "Authorization: Bearer merchant_private_key"
+Return status 200 and JSON:
+Copy
+
+{
+    "success":  true | false,
+    "result": 0,
+    "status": 200,
+    "totalCount": 1,
+    "curentPage": 1,
+    "perPage": 100,
+    "totalPage": 1,
+    "payments": [
+        {
+            "id": 123,
+            "status": "pending | approved | declined | expired",
+            "token": "[payment token]",
+            "currency": "[payment currency]",
+            "product": "[payment currency]",
+            "callback_url": "[callback/notification url]",
+            "redirect_success_url": "success redirection url",
+            "redirect_fail_url": "fail redirection url",
+            "amount": 100,
+            "created_at": "[creation date]",
+            "updated_at": "[last status update date]",
+            "extra_return_param": "[extra params, can be use to payment identification in merchant system]",
+            "operation_type": "pay | payout",
+            "order_number": "[merchant's order number]"
+        }
+    ]
+}
+Payment Get/Order - this is the method used to retrieve information about payments by order_number.
+
+HTTP Request via SSL
+GET '/api/v1/payments/order/[order_number]'
+
+Otp
+Code:
+Copy
+
+curl "https://business.reactivepay.com/api/v1/otp" \
+    -X POST \
+    -H "Authorization: Bearer merchant_private_key" \
+    -H "Content-Type: application/json" -d '{
+        "token" : "YP741BPPRuDYSAPJG6ErFyoofWYReZWA",
+        "otp" : "443443",
+    }'
+Return status 200 and JSON:
+Copy
+
+{
+    "success": true | false,
+    "errors": [],
+    "status": 200
+}
+Otp - this is the method used to confirm mobile payment.
+
+HTTP Request via SSL
+POST '/api/v1/otp'
+
+Query Parameters
+Parameter	Mandatory	Description	Validation
+token	yes	Payment token	
+otp	yes	Otp code	
+Otp resend
+Code:
+Copy
+
+curl "https://business.reactivepay.com/api/v1/otp-resend?token=YP741BPPRuDYSAPJG6ErFyoofWYReZWA" \
+    -H "Authorization: Bearer merchant_private_key"
+Return status 200 and JSON:
+Copy
+
+{
+    "success": true | false,
+    "errors": [],
+    "status": 200
+}
+Otp resend - this is the method used to resend the OTP code.
+
+HTTP Request via SSL
+GET '/api/v1/otp-resend'
+
