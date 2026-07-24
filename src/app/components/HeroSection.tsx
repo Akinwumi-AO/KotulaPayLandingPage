@@ -185,7 +185,7 @@ export function HeroSection() {
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle2 className="size-4 text-[#c5e063]" />
-            <span>ISO 27001 Certified</span>
+            <span>SSL Certified</span>
           </div>
         </motion.div>
       </motion.div>
