@@ -1,7 +1,7 @@
 
   # KotulaPay Landing Page v3
 
-  This is a code for KotulaPay Landing Page v4. 
+  This is a code bundle for KotulaPay Landing Page v3. The original project is available at https://www.figma.com/design/PfIwwVZnM4I7Nzep0a9QRW/KotulaPay-Landing-Page-v3.
 
   ## Running the code
 

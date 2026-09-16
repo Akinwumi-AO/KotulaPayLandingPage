@@ -948,7 +948,7 @@ export default function ApiReferencePage() {
                 <div className="mt-4 flex items-start gap-3 rounded-xl border border-white/8 bg-white/[0.03] p-4">
                   <Lock className="mt-0.5 h-4 w-4 shrink-0 text-[#8b9eb0]" />
                   <p className="text-xs text-[#6b7f8f] leading-relaxed">
-                    Replace <code className="text-[#c5e063] font-mono">merchant_private_key</code> with your actual Bearer token from the KotulaPay merchant dashboard.
+                    Replace <code className="text-[#c5e063] font-mono">merchant_private_key</code> with your actual Bearer token from the Kotulapay merchant dashboard.
                   </p>
                 </div>
               </motion.div>
@@ -1120,7 +1120,7 @@ export default function ApiReferencePage() {
                   <div className="mt-4 flex items-start gap-3 rounded-xl border border-white/8 bg-white/[0.03] p-4">
                     <Lock className="mt-0.5 h-4 w-4 shrink-0 text-[#8b9eb0]" />
                     <p className="text-xs text-[#6b7f8f] leading-relaxed">
-                      Replace <code className="text-[#c5e063] font-mono">merchant_private_key</code> with your actual Bearer token from the KotulaPay merchant dashboard.
+                      Replace <code className="text-[#c5e063] font-mono">merchant_private_key</code> with your actual Bearer token from the Kotulapay merchant dashboard.
                     </p>
                   </div>
                 </motion.div>

@@ -134,7 +134,7 @@ export function DownloadBrandAssetSection() {
         transition={{ duration: 0.4 }}
       >
         <p className="text-lg text-gray-700 leading-relaxed mb-4">
-          Download official KotulaPay logo assets for use in your projects, presentations, and marketing materials.
+          Download official Kotulapay logo assets for use in your projects, presentations, and marketing materials.
           Our logos are available in both light and dark versions to ensure optimal visibility across different backgrounds.
         </p>
         <p className="text-base text-gray-600 leading-relaxed">

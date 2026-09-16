@@ -315,7 +315,7 @@ export function TypographySection() {
               mobile money, and local payment methods through a single API.
             </p>
             <p className="text-base text-gray-600 leading-relaxed">
-              KotulaPay provides seamless integration with major payment providers across the continent,
+              Kotulapay provides seamless integration with major payment providers across the continent,
               offering your customers a secure and reliable payment experience.
             </p>
           </div>

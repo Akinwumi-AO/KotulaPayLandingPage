@@ -34,11 +34,11 @@ export default function CommunityPage() {
           >
             <Users className="mx-auto mb-6 size-24 text-[#c5e063]" />
             <h1 className="mb-6 text-5xl font-bold text-white md:text-6xl">
-              KotulaPay Community
+              Kotulapay Community
             </h1>
             <p className="mx-auto max-w-2xl text-xl text-gray-400 leading-relaxed">
               We're building a vibrant community of developers, merchants, and payment enthusiasts. 
-              Connect, share knowledge, get support, and collaborate with other KotulaPay users 
+              Connect, share knowledge, get support, and collaborate with other Kotulapay users 
               around the world.
             </p>
           </motion.div>

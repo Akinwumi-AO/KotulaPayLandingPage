@@ -20,7 +20,7 @@ export function LogoUsageSection() {
         transition={{ duration: 0.4 }}
       >
         <p className="text-lg text-gray-700 leading-relaxed">
-          The Logo Usage section demonstrates proper implementation of the KotulaPay logo across various
+          The Logo Usage section demonstrates proper implementation of the Kotulapay logo across various
           contexts and backgrounds, ensuring consistent brand representation.
         </p>
       </motion.div>

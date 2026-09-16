@@ -1,7 +1,7 @@
-import { motion } from 'motion/react';
+import { Link } from 'react-router';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
-import { Shield, Target, Award, Cpu, Globe, Headphones } from 'lucide-react';
+import { Shield, Target, Award, Cpu, Globe, Headphones, ArrowRight } from 'lucide-react';
 
 export function AboutPage() {
   const values = [
@@ -13,7 +13,7 @@ export function AboutPage() {
     {
       icon: Target,
       title: 'Transparency',
-      description: 'Clear pricing, honest communication, and no hidden fees - you always know where you stand.',
+      description: 'Clear pricing, honest communication, and no hidden fees — you always know where you stand.',
     },
     {
       icon: Award,
@@ -28,215 +28,189 @@ export function AboutPage() {
   ];
 
   const stats = [
-    { icon: Cpu, label: 'Uptime Guarantee', value: '99.9%' },
-    { icon: Globe, label: 'Currencies Supported', value: '135+' },
-    { icon: Shield, label: 'Payment Methods', value: '200+' },
+    { label: 'Uptime Guarantee', value: '99.9%' },
+    { label: 'Currencies Supported', value: '135+' },
+    { label: 'Payment Methods', value: '200+' },
+    { label: 'African Markets', value: '15+' },
+  ];
+
+  const capabilities = [
+    {
+      icon: Cpu,
+      title: 'Technology',
+      description: 'Built with cutting-edge technology and industry-leading security standards, our platform handles millions of transactions daily.',
+    },
+    {
+      icon: Globe,
+      title: 'Global Reach',
+      description: 'We support payments in 135+ currencies and connect to 200+ payment methods, giving your customers flexibility and choice.',
+    },
+    {
+      icon: Headphones,
+      title: 'Support',
+      description: '24/7 customer support ensures your business is never left without help. Our dedicated team is always ready.',
+    },
   ];
 
   return (
-    <div className="min-h-screen w-full bg-[#001c26]">
+    <div className="min-h-screen bg-white">
       <Header />
-      
-      <main className="pt-20">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#001c26] via-[#04403a] to-[#001c26] px-6 py-24">
-          <div className="absolute inset-0 opacity-30">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(197,224,99,0.1),transparent_50%)]" />
-          </div>
-          
-          <div className="relative mx-auto max-w-4xl text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h1 className="mb-6 text-5xl font-bold text-white md:text-6xl lg:text-7xl">
-                About <span className="text-[#c5e063]">KotulaPay</span>
-              </h1>
-              <p className="mx-auto max-w-3xl text-lg text-gray-300 md:text-xl">
-                A cutting-edge payment gateway company that has redefined the way businesses and consumers engage in digital transactions.
+
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#001c26] to-[#04403a] pt-32 pb-20">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(197,224,99,0.3) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        </div>
+        <div className="relative z-10 mx-auto max-w-[1920px] px-6 md:px-12 lg:px-[192px] text-center">
+          <h1 className="mb-4 text-5xl font-bold text-white md:text-6xl">About Kotulapay</h1>
+          <p className="mx-auto max-w-2xl text-lg text-gray-300 leading-relaxed">
+            A cutting-edge payment gateway company that has redefined the way businesses and consumers engage in digital transactions across Africa and beyond.
+          </p>
+        </div>
+      </section>
+
+      {/* Our Story */}
+      <section className="bg-[#f6faee] py-14 lg:py-20">
+        <div className="mx-auto max-w-[1920px] px-6 md:px-12 lg:px-[192px]">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+            <div>
+              <h2 className="mb-4 text-3xl font-bold text-[#001c26] md:text-4xl">Our Story</h2>
+              <p className="text-lg text-[#62636c] leading-relaxed mb-4">
+                Established with a vision to simplify and secure the world of online payments, we have swiftly become a trusted partner for businesses of all sizes and industries.
               </p>
-            </motion.div>
+              <p className="text-lg text-[#62636c] leading-relaxed">
+                From startups to enterprises, we empower organizations to accept payments seamlessly and grow their revenue with confidence — across global card networks and African mobile money rails.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {stats.map(({ label, value }) => (
+                <div key={label} className="rounded-2xl bg-white px-7 py-8 text-center">
+                  <p className="text-4xl font-bold text-[#001c26] mb-1">{value}</p>
+                  <p className="text-sm text-[#62636c]">{label}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Story Section */}
-        <section className="px-6 py-24">
-          <div className="mx-auto max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="space-y-8"
-            >
-              <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#04403a]/40 to-[#001c26]/40 p-8 backdrop-blur-sm md:p-12">
-                <h2 className="mb-4 text-3xl font-bold text-white">Our Story</h2>
-                <p className="text-lg leading-relaxed text-gray-300">
-                  Established with a vision to simplify and secure the world of online payments, we have swiftly become a trusted partner for businesses of all sizes and industries. From startups to enterprises, we empower organizations to accept payments seamlessly and grow their revenue with confidence.
-                </p>
+      {/* Mission & Vision */}
+      <section className="bg-white py-14 lg:py-20">
+        <div className="mx-auto max-w-[1920px] px-6 md:px-12 lg:px-[192px]">
+          <div className="mx-auto mb-10 max-w-[760px] text-center">
+            <h2 className="mb-4 text-3xl font-bold text-[#001c26] md:text-4xl">Mission & Vision</h2>
+            <p className="text-lg text-[#62636c] leading-relaxed">
+              Driving financial inclusion and enabling seamless commerce across borders.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="flex flex-col gap-4 items-start rounded-2xl bg-[#f6faee] px-7 py-8">
+              <div className="flex size-[52px] shrink-0 items-center justify-center rounded-[12px] bg-[#d4f291]">
+                <Target className="size-5 text-[#1e1f24]" />
               </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Mission & Vision */}
-        <section className="bg-gradient-to-br from-[#04403a]/20 to-transparent px-6 py-24">
-          <div className="mx-auto max-w-6xl">
-            <div className="grid gap-8 md:grid-cols-2">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#001c26] to-[#04403a]/30 p-8 transition-all hover:border-[#c5e063]/30"
-              >
-                <div className="absolute right-0 top-0 h-32 w-32 translate-x-8 -translate-y-8 rounded-full bg-[#c5e063]/10 blur-3xl transition-all group-hover:bg-[#c5e063]/20" />
-                <Target className="mb-6 size-12 text-[#c5e063]" />
-                <h2 className="mb-4 text-3xl font-bold text-white">Our Mission</h2>
-                <p className="text-lg leading-relaxed text-gray-300">
+              <div>
+                <h3 className="mb-2 text-xl font-semibold text-[#1d3b32] leading-snug">Our Mission</h3>
+                <p className="text-[#62636c] text-sm leading-relaxed">
                   To empower businesses globally by providing secure, scalable, and innovative payment solutions that simplify transactions and drive growth in the digital economy.
                 </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#001c26] to-[#04403a]/30 p-8 transition-all hover:border-[#c5e063]/30"
-              >
-                <div className="absolute right-0 top-0 h-32 w-32 translate-x-8 -translate-y-8 rounded-full bg-[#c5e063]/10 blur-3xl transition-all group-hover:bg-[#c5e063]/20" />
-                <Award className="mb-6 size-12 text-[#c5e063]" />
-                <h2 className="mb-4 text-3xl font-bold text-white">Our Vision</h2>
-                <p className="text-lg leading-relaxed text-gray-300">
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 items-start rounded-2xl bg-[#f6faee] px-7 py-8">
+              <div className="flex size-[52px] shrink-0 items-center justify-center rounded-[12px] bg-[#d4f291]">
+                <Award className="size-5 text-[#1e1f24]" />
+              </div>
+              <div>
+                <h3 className="mb-2 text-xl font-semibold text-[#1d3b32] leading-snug">Our Vision</h3>
+                <p className="text-[#62636c] text-sm leading-relaxed">
                   To be the world's most trusted and accessible payment gateway, enabling seamless commerce across borders and breaking down barriers to global business expansion.
                 </p>
-              </motion.div>
+              </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Values */}
-        <section className="px-6 py-24">
-          <div className="mx-auto max-w-6xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="mb-16 text-center"
-            >
-              <h2 className="mb-4 text-4xl font-bold text-white">Our Values</h2>
-              <p className="mx-auto max-w-2xl text-lg text-gray-300">
-                Security, transparency, innovation, and customer excellence are at the core of everything we do.
+      {/* Values */}
+      <section className="bg-[#e5f2f6] py-14 lg:py-20">
+        <div className="mx-auto max-w-[1920px] px-6 md:px-12 lg:px-[192px]">
+          <div className="mx-auto mb-10 max-w-[760px] text-center">
+            <h2 className="mb-4 text-3xl font-bold text-[#001c26] md:text-4xl">Our Values</h2>
+            <p className="text-lg text-[#62636c] leading-relaxed">
+              Security, transparency, innovation, and customer excellence are at the core of everything we do.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {values.map(({ icon: Icon, title, description }) => (
+              <div key={title} className="flex flex-col gap-4 items-start rounded-2xl bg-white px-7 py-8">
+                <div className="flex size-[52px] shrink-0 items-center justify-center rounded-[12px] bg-[#d4f291]">
+                  <Icon className="size-5 text-[#1e1f24]" />
+                </div>
+                <div>
+                  <h3 className="mb-2 text-xl font-semibold text-[#1d3b32] leading-snug">{title}</h3>
+                  <p className="text-[#62636c] text-sm leading-relaxed">{description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Capabilities */}
+      <section className="bg-white py-14 lg:py-20">
+        <div className="mx-auto max-w-[1920px] px-6 md:px-12 lg:px-[192px]">
+          <div className="mx-auto mb-10 max-w-[760px] text-center">
+            <h2 className="mb-4 text-3xl font-bold text-[#001c26] md:text-4xl">Technology & Capabilities</h2>
+            <p className="text-lg text-[#62636c] leading-relaxed">
+              Enterprise-grade infrastructure built for reliability, scale, and developer simplicity.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            {capabilities.map(({ icon: Icon, title, description }) => (
+              <div key={title} className="flex flex-col gap-4 items-start rounded-2xl bg-[#f6faee] px-7 py-8">
+                <div className="flex size-[52px] shrink-0 items-center justify-center rounded-[12px] bg-[#d4f291]">
+                  <Icon className="size-5 text-[#1e1f24]" />
+                </div>
+                <div>
+                  <h3 className="mb-2 text-xl font-semibold text-[#1d3b32] leading-snug">{title}</h3>
+                  <p className="text-[#62636c] text-sm leading-relaxed">{description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-[#e5f2f6] py-14 lg:py-20">
+        <div className="mx-auto max-w-[1920px] px-6 md:px-12 lg:px-[192px]">
+          <div className="relative overflow-hidden rounded-3xl bg-[#001c26] px-8 py-16 text-center md:px-16">
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+              <div className="absolute left-1/2 top-0 h-full w-[100px] -translate-x-1/2 bg-gradient-to-b from-[#00bf6f] to-transparent opacity-15 blur-[90px]" />
+            </div>
+            <div className="relative z-10">
+              <h2 className="mb-4 text-3xl font-bold text-[#fcfcfd] md:text-4xl">
+                Ready to Transform Your Payments?
+              </h2>
+              <p className="mx-auto mb-8 max-w-[520px] text-lg text-[#cdced7] leading-relaxed">
+                Join 500+ African businesses already scaling with Kotulapay.
               </p>
-            </motion.div>
-
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-              {values.map((value, index) => (
-                <motion.div
-                  key={value.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="group relative overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-[#04403a]/20 to-transparent p-6 transition-all hover:border-[#c5e063]/30 hover:shadow-lg hover:shadow-[#c5e063]/10"
-                >
-                  <value.icon className="mb-4 size-10 text-[#c5e063] transition-transform group-hover:scale-110" />
-                  <h3 className="mb-2 text-xl font-semibold text-white">{value.title}</h3>
-                  <p className="text-sm leading-relaxed text-gray-400">{value.description}</p>
-                </motion.div>
-              ))}
+              <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Link to="/contact">
+                  <button className="flex items-center gap-2 rounded-full bg-[#289685] px-8 py-4 font-medium text-[#fcfcfd] transition-colors hover:bg-[#237a71] text-base">
+                    Get Started
+                    <ArrowRight className="size-5" />
+                  </button>
+                </Link>
+                <Link to="/services">
+                  <button className="flex items-center gap-2 rounded-full border border-[#289685] px-8 py-4 font-medium text-[#fcfcfd] transition-colors hover:bg-[rgba(40,150,133,0.12)] text-base">
+                    View Services
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
-        </section>
-
-        {/* Technology & Capabilities */}
-        <section className="bg-gradient-to-br from-[#04403a]/20 to-transparent px-6 py-24">
-          <div className="mx-auto max-w-6xl">
-            <div className="grid gap-8 lg:grid-cols-3">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#001c26] to-[#04403a]/30 p-8 text-center transition-all hover:border-[#c5e063]/30"
-                >
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(197,224,99,0.1),transparent_50%)] opacity-0 transition-opacity group-hover:opacity-100" />
-                  <stat.icon className="mx-auto mb-4 size-12 text-[#c5e063]" />
-                  <div className="mb-2 text-5xl font-bold text-white">{stat.value}</div>
-                  <div className="text-sm font-medium text-gray-400">{stat.label}</div>
-                </motion.div>
-              ))}
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-12 grid gap-8 md:grid-cols-3"
-            >
-              <div className="rounded-xl border border-white/10 bg-gradient-to-br from-[#04403a]/20 to-transparent p-8">
-                <Cpu className="mb-4 size-10 text-[#c5e063]" />
-                <h3 className="mb-3 text-xl font-semibold text-white">Technology</h3>
-                <p className="text-sm leading-relaxed text-gray-400">
-                  Built with cutting-edge technology and industry-leading security standards, our platform handles millions of transactions daily.
-                </p>
-              </div>
-
-              <div className="rounded-xl border border-white/10 bg-gradient-to-br from-[#04403a]/20 to-transparent p-8">
-                <Globe className="mb-4 size-10 text-[#c5e063]" />
-                <h3 className="mb-3 text-xl font-semibold text-white">Global Reach</h3>
-                <p className="text-sm leading-relaxed text-gray-400">
-                  We support payments in 135+ currencies and connect to 200+ payment methods, giving your customers flexibility and choice.
-                </p>
-              </div>
-
-              <div className="rounded-xl border border-white/10 bg-gradient-to-br from-[#04403a]/20 to-transparent p-8">
-                <Headphones className="mb-4 size-10 text-[#c5e063]" />
-                <h3 className="mb-3 text-xl font-semibold text-white">Support</h3>
-                <p className="text-sm leading-relaxed text-gray-400">
-                  24/7 customer support in multiple languages ensures your business is never left without help. Our dedicated team is always ready.
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="px-6 py-24">
-          <div className="mx-auto max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#c5e063] to-[#a8c555] p-12 text-center"
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1),transparent_50%)]" />
-              <div className="relative">
-                <h2 className="mb-4 text-3xl font-bold text-[#0a3d3d] md:text-4xl">
-                  Ready to Transform Your Payments?
-                </h2>
-                <p className="mb-8 text-lg text-[#0a3d3d]/80">
-                  Join thousands of businesses that trust KotulaPay for their payment processing needs.
-                </p>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="rounded-full bg-[#001c26] px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-[#04403a]"
-                >
-                  Get Started Today
-                </motion.button>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      </main>
+        </div>
+      </section>
 
       <Footer />
     </div>

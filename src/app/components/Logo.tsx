@@ -8,11 +8,11 @@ interface LogoProps {
 
 export function Logo({ variant = 'light', className = '' }: LogoProps) {
   const logoSrc = variant === 'light' ? logoLight : logoDark;
-  
+
   return (
-    <img 
-      src={logoSrc} 
-      alt="KotulaPay" 
+    <img
+      src={logoSrc}
+      alt="Kotulapay"
       className={`h-8 w-auto ${className}`}
     />
   );

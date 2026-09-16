@@ -39,7 +39,7 @@ export default function HelpCenterPage() {
             <p className="mx-auto max-w-2xl text-xl text-gray-400 leading-relaxed">
               Our comprehensive Help Center is on the way. Find answers to common questions, 
               troubleshooting guides, integration tutorials, and step-by-step documentation 
-              to help you succeed with KotulaPay.
+              to help you succeed with Kotulapay.
             </p>
           </motion.div>
 

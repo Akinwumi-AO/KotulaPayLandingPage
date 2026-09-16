@@ -21,7 +21,13 @@ export default defineConfig({
     figmaAssetResolver(),
     // The React and Tailwind plugins are both required for Make, even if
     // Tailwind is not being actively used – do not remove them
-    react(),
+    react({
+      babel: {
+        // Always use compact output — suppresses the "deoptimised styling"
+        // warning that fires when a source file exceeds 500 KB.
+        compact: true,
+      },
+    }),
     tailwindcss(),
   ],
   resolve: {

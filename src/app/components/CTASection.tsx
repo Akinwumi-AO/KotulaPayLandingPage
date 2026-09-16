@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { ArrowRight, Rocket } from 'lucide-react';
+import { Link } from 'react-router';
 
 export function CTASection() {
   return (
@@ -68,7 +69,7 @@ export function CTASection() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mx-auto mb-10 max-w-2xl text-xl text-gray-300"
             >
-              Join 500+ African businesses already scaling with KotulaPay. 
+              Join 500+ African businesses already scaling with Kotulapay. 
               Get started today with our free sandbox environment.
             </motion.p>
 
@@ -79,22 +80,26 @@ export function CTASection() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="flex flex-wrap items-center justify-center gap-4"
             >
-              <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 25px 50px rgba(197, 224, 99, 0.3)" }}
-                whileTap={{ scale: 0.95 }}
-                className="group flex items-center gap-3 rounded-full bg-[#c5e063] px-8 py-4 text-lg font-semibold text-[#0a3d3d] shadow-lg shadow-[#c5e063]/20 transition-all"
-              >
-                Create Free Account
-                <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
-              </motion.button>
+              <Link to="/contact">
+                <motion.button
+                  whileHover={{ scale: 1.05, boxShadow: "0 25px 50px rgba(197, 224, 99, 0.3)" }}
+                  whileTap={{ scale: 0.95 }}
+                  className="group flex items-center gap-3 rounded-full bg-[#c5e063] px-8 py-4 text-lg font-semibold text-[#0a3d3d] shadow-lg shadow-[#c5e063]/20 transition-all"
+                >
+                  Create Free Account
+                  <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
+                </motion.button>
+              </Link>
 
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="rounded-full border border-white/30 bg-white/10 px-8 py-4 text-lg font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20"
-              >
-                Contact Sales
-              </motion.button>
+              <Link to="/contact">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="rounded-full border border-white/30 bg-white/10 px-8 py-4 text-lg font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20"
+                >
+                  Contact Sales
+                </motion.button>
+              </Link>
             </motion.div>
 
             {/* Trust indicators */}

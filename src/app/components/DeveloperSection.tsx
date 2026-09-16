@@ -7,10 +7,10 @@ export function DeveloperSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
-  const codeExample = `// Initialize KotulaPay
-import { KotulaPay } from 'kotulapay';
+  const codeExample = `// Initialize Kotulapay
+import { Kotulapay } from 'kotulapay';
 
-const payment = new KotulaPay({
+const payment = new Kotulapay({
   publicKey: 'pk_live_...',
   currency: 'KES'
 });
@@ -144,11 +144,11 @@ const response = await payment.charge({
               <div className="relative">
                 <pre className="overflow-x-auto text-sm">
                   <code className="text-gray-300">
-                    <span className="text-gray-500">// Initialize KotulaPay</span>
+                    <span className="text-gray-500">// Initialize Kotulapay</span>
                     {'\n'}
                     <span className="text-purple-400">import</span>
                     {' '}
-                    <span className="text-gray-300">{'{ KotulaPay }'}</span>
+                    <span className="text-gray-300">{'{ Kotulapay }'}</span>
                     {' '}
                     <span className="text-purple-400">from</span>
                     {' '}
@@ -161,7 +161,7 @@ const response = await payment.charge({
                     {' = '}
                     <span className="text-purple-400">new</span>
                     {' '}
-                    <span className="text-yellow-400">KotulaPay</span>
+                    <span className="text-yellow-400">Kotulapay</span>
                     <span className="text-gray-300">{'({'}</span>
                     {'\n  '}
                     <span className="text-blue-300">publicKey</span>

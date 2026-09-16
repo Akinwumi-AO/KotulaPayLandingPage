@@ -14,7 +14,7 @@ export function LogoMark({ variant = 'green', className = '', size = 48 }: LogoM
   return (
     <img
       src={logoMarkSrc}
-      alt="KotulaPay Logo Mark"
+      alt="Kotulapay Logo Mark"
       className={className}
       style={{ width: size, height: size }}
     />

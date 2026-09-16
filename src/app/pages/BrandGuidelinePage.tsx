@@ -101,7 +101,7 @@ export default function BrandGuidelinePage() {
           >
             <h1 className="mb-4 text-5xl font-bold text-white md:text-6xl">Brand Guidelines</h1>
             <p className="mx-auto max-w-2xl text-lg text-gray-300">
-              Complete brand identity guidelines for KotulaPay
+              Complete brand identity guidelines for Kotulapay
             </p>
           </motion.div>
         </div>

@@ -1,28 +1,22 @@
-import { motion } from 'motion/react';
+import { Link } from 'react-router';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
-import { 
-  CreditCard, 
-  Wallet, 
-  Smartphone, 
-  Globe, 
-  Shield, 
-  BarChart3, 
-  Code, 
+import {
+  CreditCard,
+  Wallet,
+  Smartphone,
+  Globe,
+  Shield,
+  BarChart3,
+  Code,
   Headphones,
   RefreshCw,
   FileText,
   TrendingUp,
-  Zap,
   CheckCircle2,
-  ArrowRight
+  ArrowRight,
+  LucideIcon,
 } from 'lucide-react';
-import visaLogo from 'figma:asset/244d5d221ebf960a8ce753378fb4dce5611382f6.png';
-import mastercardLogo from 'figma:asset/bcbab44d7c42b63f85e9d1e79e4fca4c2454ced8.png';
-import amexLogo from 'figma:asset/08473e4cf1bcce15dae6c93326137135865ce4fb.png';
-import paypalLogo from 'figma:asset/5c371900cb7213c7333c8c800273fd8b83bdc004.png';
-import applePayLogo from 'figma:asset/975f152e4eadbee46faa943bbba68f2c48238857.png';
-import googlePayLogo from 'figma:asset/25cb61f1d75bdd57dfe487f9c5f1788a05d86850.png';
 
 export function ServicesPage() {
   const mainServices = [
@@ -33,13 +27,12 @@ export function ServicesPage() {
       features: [
         'Unified checkout for web and mobile',
         'Smart retries to reduce soft declines',
-        'Automated reconciliation with daily reports'
+        'Automated reconciliation with daily reports',
       ],
       stat: '+14%',
       statLabel: 'Average authorization lift',
-      highlight: 'Dynamic fraud screening, local acquiring, and intelligent retries help increase approvals.',
-      cta: 'Explore Card Payments',
-      gradient: 'from-blue-500/20 to-cyan-500/20'
+      bg: 'bg-[#f6faee]',
+      flip: false,
     },
     {
       icon: Wallet,
@@ -48,13 +41,12 @@ export function ServicesPage() {
       features: [
         'Localized checkout copy and receipts',
         'One dashboard across methods and regions',
-        'Automated settlement notifications'
+        'Automated settlement notifications',
       ],
       stat: '45+',
-      statLabel: 'Coverage across markets',
-      highlight: 'Serve shoppers in their currency with local messaging, payouts, and settlement in your target regions.',
-      cta: 'Discover Alternatives',
-      gradient: 'from-purple-500/20 to-pink-500/20'
+      statLabel: 'Markets covered',
+      bg: 'bg-white',
+      flip: true,
     },
     {
       icon: Smartphone,
@@ -63,288 +55,141 @@ export function ServicesPage() {
       features: [
         'USSD and app-based payment flows',
         'Instant confirmations and receipts',
-        'Scheduled payouts to suppliers'
+        'Scheduled payouts to suppliers',
       ],
       stat: 'Real-time',
-      statLabel: 'insights in seconds',
-      highlight: 'Track every transaction with live dashboards, downloadable statements, and automated settlement notices.',
-      cta: 'See Mobile Money',
-      gradient: 'from-green-500/20 to-emerald-500/20'
-    }
+      statLabel: 'Insights in seconds',
+      bg: 'bg-[#e5f2f6]',
+      flip: false,
+    },
   ];
 
-  const additionalServices = [
-    {
-      icon: Globe,
-      title: 'Payment Gateway',
-      description: 'Seamlessly integrate secure payment processing into your website or application with our robust API and pre-built plugins for popular platforms.'
-    },
-    {
-      icon: RefreshCw,
-      title: 'Recurring Billing',
-      description: 'Manage subscriptions and recurring payments with ease. Automated billing, flexible schedules, and comprehensive customer management tools.'
-    },
-    {
-      icon: FileText,
-      title: 'Invoice Management',
-      description: 'Create, send, and track invoices automatically. Reduce payment delays and improve cash flow with our integrated invoicing system.'
-    },
-    {
-      icon: TrendingUp,
-      title: 'Multi-Currency Support',
-      description: 'Accept payments in 135+ currencies with real-time exchange rates and automatic currency conversion for a truly global experience.'
-    },
-    {
-      icon: Shield,
-      title: 'Fraud Prevention',
-      description: 'Enterprise-grade security with advanced fraud detection, PCI DSS compliance, and multi-layer authentication to protect your business.'
-    },
-    {
-      icon: BarChart3,
-      title: 'Analytics & Reporting',
-      description: 'Comprehensive dashboards and detailed reporting tools to understand your payment trends, customer behavior, and optimize revenue.'
-    },
-    {
-      icon: Code,
-      title: 'Developer Tools',
-      description: 'Powerful APIs, webhooks, and SDKs for Node.js, Python, PHP, Java, and more. Complete documentation and sandbox environment included.'
-    },
-    {
-      icon: Headphones,
-      title: '24/7 Support',
-      description: 'Round-the-clock customer support via email, phone, and live chat. Our expert team is always ready to help you succeed.'
-    }
-  ];
-
-  const paymentMethods = [
-    { name: 'Visa', logo: visaLogo },
-    { name: 'Mastercard', logo: mastercardLogo },
-    { name: 'American Express', logo: amexLogo },
-    { name: 'PayPal', logo: paypalLogo },
-    { name: 'Apple Pay', logo: applePayLogo },
-    { name: 'Google Pay', logo: googlePayLogo }
+  const additionalServices: { icon: LucideIcon; title: string; description: string }[] = [
+    { icon: Globe,      title: 'Payment Gateway',    description: 'Seamlessly integrate secure payment processing into your website or application with our robust API and pre-built plugins.' },
+    { icon: RefreshCw,  title: 'Recurring Billing',  description: 'Manage subscriptions and recurring payments with ease. Automated billing, flexible schedules, and customer management tools.' },
+    { icon: FileText,   title: 'Invoice Management', description: 'Create, send, and track invoices automatically. Reduce payment delays and improve cash flow with our integrated invoicing system.' },
+    { icon: TrendingUp, title: 'Multi-Currency',      description: 'Accept payments in 135+ currencies with real-time exchange rates and automatic currency conversion for a truly global experience.' },
+    { icon: Shield,     title: 'Fraud Prevention',   description: 'Enterprise-grade security with advanced fraud detection, PCI DSS compliance, and multi-layer authentication to protect your business.' },
+    { icon: BarChart3,  title: 'Analytics & Reporting', description: 'Comprehensive dashboards and detailed reporting tools to understand your payment trends, customer behavior, and optimize revenue.' },
+    { icon: Code,       title: 'Developer Tools',    description: 'Powerful APIs, webhooks, and SDKs for Node.js, Python, PHP, Java, and more. Full documentation and sandbox environment included.' },
+    { icon: Headphones, title: '24/7 Support',       description: 'Round-the-clock customer support via email, phone, and live chat. Our expert team is always ready to help you succeed.' },
   ];
 
   return (
-    <div className="min-h-screen w-full bg-[#001c26]">
+    <div className="min-h-screen bg-white">
       <Header />
-      
-      <main className="pt-20">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#001c26] via-[#04403a] to-[#001c26] px-6 py-24">
-          <div className="absolute inset-0 opacity-30">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(197,224,99,0.1),transparent_50%)]" />
-          </div>
-          
-          <div className="relative mx-auto max-w-5xl text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h1 className="mb-6 text-5xl font-bold text-white md:text-6xl lg:text-7xl">
-                Our <span className="text-[#c5e063]">Services</span>
-              </h1>
-              <p className="mx-auto max-w-3xl text-lg text-gray-300 md:text-xl">
-                Explore the core payment capabilities that power collections, settlement, optimization, and growth across global markets.
-              </p>
-            </motion.div>
-          </div>
-        </section>
 
-        {/* Main Services - Card, Alternative, Mobile Money */}
-        <section className="px-6 py-24">
-          <div className="mx-auto max-w-7xl space-y-16">
-            {mainServices.map((service, index) => (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className={`group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br ${service.gradient} p-8 backdrop-blur-sm transition-all hover:border-[#c5e063]/30 md:p-12`}
-              >
-                <div className="absolute right-0 top-0 h-64 w-64 translate-x-32 -translate-y-32 rounded-full bg-[#c5e063]/5 blur-3xl transition-all group-hover:bg-[#c5e063]/10" />
-                
-                <div className="relative grid gap-8 lg:grid-cols-2 lg:gap-12">
-                  {/* Left Side - Main Info */}
-                  <div>
-                    <service.icon className="mb-6 size-14 text-[#c5e063]" />
-                    <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">{service.title}</h2>
-                    <p className="mb-6 text-lg leading-relaxed text-gray-300">{service.description}</p>
-                    
-                    <div className="mb-8 space-y-3">
-                      {service.features.map((feature) => (
-                        <div key={feature} className="flex items-start gap-3">
-                          <CheckCircle2 className="mt-1 size-5 shrink-0 text-[#c5e063]" />
-                          <span className="text-gray-300">{feature}</span>
-                        </div>
-                      ))}
-                    </div>
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#001c26] to-[#04403a] pt-32 pb-20">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(197,224,99,0.3) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        </div>
+        <div className="relative z-10 mx-auto max-w-[1920px] px-6 md:px-12 lg:px-[192px] text-center">
+          <h1 className="mb-4 text-5xl font-bold text-white md:text-6xl">Our Services</h1>
+          <p className="mx-auto max-w-2xl text-lg text-gray-300 leading-relaxed">
+            Explore the core payment capabilities that power collections, settlement, optimization, and growth across global markets.
+          </p>
+        </div>
+      </section>
 
-                    <motion.button
-                      whileHover={{ scale: 1.05, x: 5 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="group/btn inline-flex items-center gap-2 rounded-full bg-[#c5e063] px-6 py-3 font-semibold text-[#0a3d3d] shadow-lg transition-all hover:shadow-xl hover:shadow-[#c5e063]/30"
-                    >
-                      {service.cta}
-                      <ArrowRight className="size-5 transition-transform group-hover/btn:translate-x-1" />
-                    </motion.button>
-                  </div>
-
-                  {/* Right Side - Stats & Highlight */}
-                  <div className="flex flex-col justify-center space-y-6">
-                    <div className="rounded-2xl border border-white/10 bg-[#001c26]/50 p-8 backdrop-blur-sm">
-                      <div className="mb-2 text-sm font-medium uppercase tracking-wide text-gray-400">
-                        Performance
-                      </div>
-                      <div className="mb-1 text-5xl font-bold text-[#c5e063]">{service.stat}</div>
-                      <div className="text-sm text-gray-400">{service.statLabel}</div>
-                    </div>
-
-                    <div className="rounded-2xl border border-[#c5e063]/20 bg-gradient-to-br from-[#c5e063]/5 to-transparent p-6">
-                      <Zap className="mb-3 size-8 text-[#c5e063]" />
-                      <p className="text-sm leading-relaxed text-gray-300">{service.highlight}</p>
-                    </div>
-                  </div>
+      {/* Main Services */}
+      {mainServices.map(({ icon: Icon, title, description, features, stat, statLabel, bg, flip }) => (
+        <section key={title} className={`${bg} py-14 lg:py-20`}>
+          <div className="mx-auto max-w-[1920px] px-6 md:px-12 lg:px-[192px]">
+            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+              {/* text */}
+              <div className={flip ? 'order-1 lg:order-2' : ''}>
+                <div className="flex size-[52px] shrink-0 items-center justify-center rounded-[12px] bg-[#d4f291] mb-5">
+                  <Icon className="size-5 text-[#1e1f24]" />
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </section>
+                <h2 className="mb-4 text-3xl font-bold text-[#001c26] md:text-4xl">{title}</h2>
+                <p className="mb-6 text-lg text-[#62636c] leading-relaxed">{description}</p>
+                <ul className="mb-8 space-y-3">
+                  {features.map(f => (
+                    <li key={f} className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-[#289685]" />
+                      <span className="text-[#62636c]">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/contact">
+                  <button className="flex items-center gap-2 rounded-full bg-[#289685] px-8 py-4 font-medium text-[#fcfcfd] transition-colors hover:bg-[#237a71] text-base">
+                    Get Started
+                    <ArrowRight className="size-5" />
+                  </button>
+                </Link>
+              </div>
 
-        {/* Additional Services Grid */}
-        <section className="bg-gradient-to-br from-[#04403a]/20 to-transparent px-6 py-24">
-          <div className="mx-auto max-w-7xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="mb-16 text-center"
-            >
-              <h2 className="mb-4 text-4xl font-bold text-white md:text-5xl">
-                Complete Payment <span className="text-[#c5e063]">Solutions</span>
-              </h2>
-              <p className="mx-auto max-w-2xl text-lg text-gray-300">
-                Everything you need to accept, manage, and optimize payments for your business.
-              </p>
-            </motion.div>
-
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              {additionalServices.map((service, index) => (
-                <motion.div
-                  key={service.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group relative overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-[#001c26] to-[#04403a]/30 p-6 transition-all hover:border-[#c5e063]/30 hover:shadow-lg hover:shadow-[#c5e063]/10"
-                >
-                  <div className="absolute right-0 top-0 h-32 w-32 translate-x-16 -translate-y-16 rounded-full bg-[#c5e063]/5 blur-2xl transition-all group-hover:bg-[#c5e063]/10" />
-                  <service.icon className="relative mb-4 size-10 text-[#c5e063] transition-transform group-hover:scale-110" />
-                  <h3 className="relative mb-3 text-xl font-semibold text-white">{service.title}</h3>
-                  <p className="relative text-sm leading-relaxed text-gray-400">{service.description}</p>
-                </motion.div>
-              ))}
+              {/* stat card */}
+              <div className={`flex items-center justify-center ${flip ? 'order-2 lg:order-1' : ''}`}>
+                <div className="w-full max-w-sm rounded-2xl bg-white border-2 border-[#e6eced] px-10 py-12 text-center">
+                  <p className="text-6xl font-bold text-[#001c26] mb-2">{stat}</p>
+                  <p className="text-lg text-[#62636c]">{statLabel}</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
+      ))}
 
-        {/* Payment Methods Section */}
-        <section className="px-6 py-24">
-          <div className="mx-auto max-w-5xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center"
-            >
-              <h2 className="mb-4 text-4xl font-bold text-white md:text-5xl">
-                Supported <span className="text-[#c5e063]">Payment Methods</span>
-              </h2>
-              <p className="mb-12 text-lg text-gray-300">
-                Accept major global cards, wallets, and alternative payment rails through one integration.
-              </p>
-
-              <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-6">
-                {paymentMethods.map((method, index) => (
-                  <motion.div
-                    key={method.name}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    className="group relative flex aspect-square flex-col items-center justify-center rounded-xl border border-white/10 bg-white/95 p-6 transition-all hover:border-[#c5e063]/30 hover:shadow-lg hover:shadow-[#c5e063]/10"
-                  >
-                    {typeof method.logo === 'string' && method.logo.startsWith('http') ? (
-                      <img 
-                        src={method.logo} 
-                        alt={method.name}
-                        className="h-12 w-auto object-contain"
-                      />
-                    ) : typeof method.logo === 'string' && method.logo.length <= 3 ? (
-                      <div className="text-4xl font-bold text-gray-700">{method.logo}</div>
-                    ) : (
-                      <img 
-                        src={method.logo} 
-                        alt={method.name}
-                        className={`w-auto object-contain ${
-                          method.name === 'American Express' 
-                            ? 'h-20' 
-                            : method.name === 'Mastercard' || method.name === 'PayPal' 
-                            ? 'h-16' 
-                            : 'h-12'
-                        }`}
-                      />
-                    )}
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+      {/* Additional Services */}
+      <section className="bg-[#f6faee] py-14 lg:py-20">
+        <div className="mx-auto max-w-[1920px] px-6 md:px-12 lg:px-[192px]">
+          <div className="mx-auto mb-10 max-w-[760px] text-center">
+            <h2 className="mb-4 text-3xl font-bold text-[#001c26] md:text-4xl">
+              Complete Payment Solutions
+            </h2>
+            <p className="text-lg text-[#62636c] leading-relaxed">
+              Everything you need to accept, manage, and optimize payments for your business.
+            </p>
           </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="px-6 py-24">
-          <div className="mx-auto max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#c5e063] to-[#a8c555] p-12 text-center"
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1),transparent_50%)]" />
-              <div className="relative">
-                <h2 className="mb-4 text-3xl font-bold text-[#0a3d3d] md:text-4xl">
-                  Ready to Get Started?
-                </h2>
-                <p className="mb-8 text-lg text-[#0a3d3d]/80">
-                  Join thousands of businesses processing payments with KotulaPay. Start accepting payments in minutes.
-                </p>
-                <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="rounded-full bg-[#001c26] px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:bg-[#04403a]"
-                  >
-                    Start Free Trial
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="rounded-full border-2 border-[#0a3d3d] px-8 py-4 text-lg font-semibold text-[#0a3d3d] transition-all hover:bg-[#0a3d3d] hover:text-[#c5e063]"
-                  >
-                    Contact Sales
-                  </motion.button>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {additionalServices.map(({ icon: Icon, title, description }) => (
+              <div key={title} className="flex flex-col gap-4 items-start rounded-2xl bg-white px-7 py-8">
+                <div className="flex size-[52px] shrink-0 items-center justify-center rounded-[12px] bg-[#d4f291]">
+                  <Icon className="size-5 text-[#1e1f24]" />
+                </div>
+                <div>
+                  <h3 className="mb-2 text-xl font-semibold text-[#1d3b32] leading-snug">{title}</h3>
+                  <p className="text-[#62636c] text-sm leading-relaxed">{description}</p>
                 </div>
               </div>
-            </motion.div>
+            ))}
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-[#e5f2f6] py-14 lg:py-20">
+        <div className="mx-auto max-w-[1920px] px-6 md:px-12 lg:px-[192px]">
+          <div className="relative overflow-hidden rounded-3xl bg-[#001c26] px-8 py-16 text-center md:px-16">
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+              <div className="absolute left-1/2 top-0 h-full w-[100px] -translate-x-1/2 bg-gradient-to-b from-[#00bf6f] to-transparent opacity-15 blur-[90px]" />
+            </div>
+            <div className="relative z-10">
+              <h2 className="mb-4 text-3xl font-bold text-[#fcfcfd] md:text-4xl">
+                Ready to Get Started?
+              </h2>
+              <p className="mx-auto mb-8 max-w-[520px] text-lg text-[#cdced7] leading-relaxed">
+                Join businesses processing payments with Kotulapay. Start accepting payments in minutes.
+              </p>
+              <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Link to="/contact">
+                  <button className="flex items-center gap-2 rounded-full bg-[#289685] px-8 py-4 font-medium text-[#fcfcfd] transition-colors hover:bg-[#237a71] text-base">
+                    Contact Sales
+                    <ArrowRight className="size-5" />
+                  </button>
+                </Link>
+                <Link to="/resources/documentation">
+                  <button className="flex items-center gap-2 rounded-full border border-[#289685] px-8 py-4 font-medium text-[#fcfcfd] transition-colors hover:bg-[rgba(40,150,133,0.12)] text-base">
+                    View Documentation
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>

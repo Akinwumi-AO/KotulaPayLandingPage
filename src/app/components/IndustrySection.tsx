@@ -167,7 +167,7 @@ export function IndustrySection() {
             <span className="text-[#c5e063]">Every Business</span>
           </h2>
           <p className="mx-auto max-w-2xl text-xl text-gray-400">
-            From startups to enterprises, KotulaPay provides tailored payment solutions 
+            From startups to enterprises, Kotulapay provides tailored payment solutions 
             that grow with your business
           </p>
         </motion.div>
