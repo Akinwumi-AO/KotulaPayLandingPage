@@ -142,7 +142,8 @@ export function Header() {
   const [isMobileResourcesOpen, setIsMobileResourcesOpen] = useState(false);
 
   const isOnResourcesPage =
-    location.pathname.startsWith('/resources') || location.pathname === '/brand-guidelines';
+    (location.pathname.startsWith('/resources') && location.pathname !== '/resources/faq')
+    || location.pathname === '/brand-guidelines';
 
   useEffect(() => {
     setIsResourcesHovered(false);
@@ -217,7 +218,7 @@ export function Header() {
                       {item.label}
                       <svg fill="none" viewBox="0 0 11.4552 7.0002" width="10" height="6"
                         className={`transition-transform duration-200 ${isResourcesHovered ? 'rotate-180' : ''}`}>
-                        <path d={svgPaths.p3289f600} fill={chevron} />
+                        <path d={svgPaths.p3289f600} fill="currentColor" />
                       </svg>
                     </a>
                   )}
