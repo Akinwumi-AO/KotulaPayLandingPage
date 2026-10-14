@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { PageMeta } from '../components/PageMeta';
 import { AnimatePresence, motion } from 'motion/react';
 import { FileText, ChevronDown, Menu, X } from 'lucide-react';
 import { TermsHeader } from '../components/docs/TermsHeader';
@@ -227,6 +228,11 @@ export default function PrivacyPolicyPage() {
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-[#0d1117]' : 'bg-white'}`}>
+      <PageMeta
+        title="Privacy Policy | Kotulapay"
+        description="Read Kotulapay's privacy policy to understand how we collect, use, and protect your data."
+        canonical="https://kotulapay.com/privacy-policy"
+      />
       <TermsHeader isDarkMode={isDarkMode} onToggleDarkMode={() => setIsDarkMode(!isDarkMode)} />
 
       {/* Mobile Fixed Section Nav */}

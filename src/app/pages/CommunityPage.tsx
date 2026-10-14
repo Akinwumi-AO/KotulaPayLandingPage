@@ -2,10 +2,16 @@ import { motion } from 'motion/react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Users, Sparkles } from 'lucide-react';
+import { PageMeta } from '../components/PageMeta';
 
 export default function CommunityPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#001c26] via-[#04403a] to-[#001c26]">
+      <PageMeta
+        title="Community | Kotulapay"
+        description="Join the Kotulapay developer and merchant community to share knowledge and get support."
+        canonical="https://kotulapay.com/support/community"
+      />
       <Header />
       
       <main className="relative overflow-hidden pt-32 pb-24">

@@ -1,11 +1,17 @@
 import { motion } from 'motion/react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { PageMeta } from '../components/PageMeta';
 import { HelpCircle, Sparkles } from 'lucide-react';
 
 export default function HelpCenterPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#001c26] via-[#04403a] to-[#001c26]">
+      <PageMeta
+        title="Help Center | Kotulapay"
+        description="Get support and find answers in the Kotulapay Help Center."
+        canonical="https://kotulapay.com/support/help-center"
+      />
       <Header />
       
       <main className="relative overflow-hidden pt-32 pb-24">

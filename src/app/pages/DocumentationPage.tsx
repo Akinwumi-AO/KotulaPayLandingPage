@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { PageMeta } from '../components/PageMeta';
 import { AnimatePresence, motion } from 'motion/react';
 import h2hFlowImage from '../../imports/image-5.png';
 import h2hDiagramImage from '../../imports/image-6.png';
@@ -224,6 +225,11 @@ export default function DocumentationPage() {
 
   return (
     <div className={`min-h-screen overflow-x-hidden ${isDarkMode ? 'bg-[#0d1117]' : 'bg-white'}`}>
+      <PageMeta
+        title="Documentation | Kotulapay"
+        description="Access Kotulapay's developer documentation, integration guides, and API references to get started quickly."
+        canonical="https://kotulapay.com/resources/documentation"
+      />
       <DocsHeader
         isDarkMode={isDarkMode}
         onToggleDarkMode={toggleDarkMode}

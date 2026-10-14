@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Copy, Check, Code2, Zap, Lock, ArrowRight } from 'lucide-react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { PageMeta } from '../components/PageMeta';
 
 function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
@@ -782,6 +783,11 @@ export default function ApiReferencePage() {
 
   return (
     <>
+      <PageMeta
+        title="API Reference | Kotulapay"
+        description="Explore the full Kotulapay API reference for payment processing, settlements, and more."
+        canonical="https://kotulapay.com/resources/api-reference"
+      />
       <Header />
       <div className="min-h-screen bg-gradient-to-b from-[#001c26] to-[#04403a] pt-32 pb-24">
         <div className="mx-auto max-w-7xl px-6">

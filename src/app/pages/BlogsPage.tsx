@@ -2,10 +2,16 @@ import { motion } from 'motion/react';
 import { Construction } from 'lucide-react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { PageMeta } from '../components/PageMeta';
 
 export default function BlogsPage() {
   return (
     <>
+      <PageMeta
+        title="Blogs | Kotulapay"
+        description="Read the latest insights, news, and updates from Kotulapay on payments, fintech, and African markets."
+        canonical="https://kotulapay.com/resources/blogs"
+      />
       <Header />
       <div className="min-h-screen bg-gradient-to-b from-[#001c26] to-[#04403a] pt-32 pb-20">
         <div className="mx-auto max-w-7xl px-6">

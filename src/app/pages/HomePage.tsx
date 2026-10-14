@@ -8,6 +8,7 @@ import imgOnePlatform from '../../imports/Homepage/030526e7baed7dfb53b6a1bc2f9c5
 import imgDevelopers from '../../imports/image-10.png';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { PageMeta } from '../components/PageMeta';
 
 class LazyErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false };
@@ -15,10 +16,11 @@ class LazyErrorBoundary extends Component<{ children: ReactNode }, { failed: boo
   render() { return this.state.failed ? null : this.props.children; }
 }
 
-const Hero1920 = lazy(() => import('../../imports/1920X1080/index'));
-const Hero1440 = lazy(() => import('../../imports/1440X1024-1/index'));
-const HeroIPad = lazy(() => import('../../imports/IPadPro111-1/index'));
-const HeroMobile = lazy(() => import('../../imports/IPhone1617ProMax1-1/index'));
+const nullMod = { default: () => null };
+const Hero1920  = lazy(() => import('../../imports/1920X1080/index').catch(() => nullMod));
+const Hero1440  = lazy(() => import('../../imports/1440X1024-1/index').catch(() => nullMod));
+const HeroIPad  = lazy(() => import('../../imports/IPadPro111-1/index').catch(() => nullMod));
+const HeroMobile = lazy(() => import('../../imports/IPhone1617ProMax1-1/index').catch(() => nullMod));
 
 /* ─── 1. HERO ────────────────────────────────────────────────── */
 function HeroSection() {
@@ -347,6 +349,11 @@ function ReadyToTransform() {
 export function HomePage() {
   return (
     <div className="min-h-screen w-full bg-[#001c26]">
+      <PageMeta
+        title="Kotulapay | Payment Solutions for African Businesses"
+        description="Discover Kotulapay's payment solutions for businesses in Africa. Explore our services for simpler, more efficient digital payments."
+        canonical="https://kotulapay.com/"
+      />
       <Header />
       <main>
         <HeroSection />

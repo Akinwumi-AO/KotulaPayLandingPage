@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { ChevronDown, ArrowRight } from 'lucide-react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { PageMeta } from '../components/PageMeta';
 
 const faqs = [
   {
@@ -128,6 +129,11 @@ function FaqAccordion({ category, questions }: typeof faqs[0]) {
 export default function FaqPage() {
   return (
     <div className="min-h-screen bg-white">
+      <PageMeta
+        title="FAQ | Kotulapay"
+        description="Find answers to frequently asked questions about Kotulapay's payment services, onboarding, and integrations."
+        canonical="https://kotulapay.com/resources/faq"
+      />
       <Header />
 
       {/* Hero */}

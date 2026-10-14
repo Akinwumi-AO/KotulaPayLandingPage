@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { PageMeta } from '../components/PageMeta';
 import {
   CreditCard,
   Wallet,
@@ -77,6 +78,11 @@ export function ServicesPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <PageMeta
+        title="Payment Services | Kotulapay"
+        description="Explore Kotulapay's payment services including card processing, mobile money, settlements, and cross-border payments for African businesses."
+        canonical="https://kotulapay.com/services"
+      />
       <Header />
 
       {/* Hero */}

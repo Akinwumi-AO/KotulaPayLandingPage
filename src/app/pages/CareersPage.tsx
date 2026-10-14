@@ -1,12 +1,18 @@
 import { motion } from 'motion/react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { PageMeta } from '../components/PageMeta';
 import { Briefcase, Mail, Linkedin, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router';
 
 export default function CareersPage() {
   return (
     <div className="min-h-screen w-full bg-[#001c26]">
+      <PageMeta
+        title="Careers | Kotulapay"
+        description="Join the Kotulapay team and help build the payment infrastructure powering Africa's digital economy."
+        canonical="https://kotulapay.com/careers"
+      />
       <Header />
 
       {/* Hero */}

@@ -2,6 +2,7 @@ import { useState, FormEvent } from 'react';
 import { Mail, Phone, MessageCircle, Send } from 'lucide-react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { PageMeta } from '../components/PageMeta';
 
 export function ContactPage() {
   const [formData, setFormData] = useState({
@@ -55,6 +56,11 @@ export function ContactPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <PageMeta
+        title="Contact Us | Kotulapay"
+        description="Get in touch with the Kotulapay team. We're here to help you with payment solutions for your business."
+        canonical="https://kotulapay.com/contact"
+      />
       <Header />
 
       {/* Hero */}
@@ -139,7 +145,7 @@ export function ContactPage() {
 
               {/* Office note */}
               <div className="rounded-2xl bg-[#e5f2f6] px-7 py-6 mt-2">
-                <h3 className="mb-2 text-lg font-semibold text-[#1d3b32]">Headquartered in Africa</h3>
+                <h3 className="mb-2 text-lg font-semibold text-[#1d3b32]">Location</h3>
                 <p className="text-sm text-[#62636c] leading-relaxed">
                   Kotulapay is built for African businesses and operates across multiple markets including Kenya, Nigeria, Ghana, Uganda, Tanzania, and more.
                 </p>

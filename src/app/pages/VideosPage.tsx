@@ -3,10 +3,16 @@ import { Construction, Play, Bell } from 'lucide-react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Link } from 'react-router';
+import { PageMeta } from '../components/PageMeta';
 
 export default function VideosPage() {
   return (
     <div className="min-h-screen w-full bg-[#001c26]">
+      <PageMeta
+        title="Video Resources | Kotulapay"
+        description="Watch tutorials, product demos, and expert interviews to get the most out of Kotulapay's payment infrastructure."
+        canonical="https://kotulapay.com/resources/videos"
+      />
       <Header />
 
       {/* Hero */}

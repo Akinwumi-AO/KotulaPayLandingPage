@@ -270,7 +270,7 @@ export function Header() {
 
           {/* Desktop CTAs */}
           <div className="hidden shrink-0 items-center gap-2 xl:flex">
-            <Link to="/contact">
+            <a href="https://core.kotulapay.com/office" target="_blank" rel="noopener noreferrer">
               <button
                 className={`relative rounded-full px-6 py-2.5 text-[15px] font-medium leading-none tracking-[-0.03em] whitespace-nowrap transition-colors duration-300 ${signInTxt}`}
                 style={{ fontFeatureSettings: '"calt" 0, "liga" 0' }}
@@ -278,7 +278,7 @@ export function Header() {
                 Sign In
                 <span className={`pointer-events-none absolute inset-0 rounded-full border-2 transition-colors duration-300 ${signInBdr}`} />
               </button>
-            </Link>
+            </a>
             <Link to="/contact">
               <button
                 className="whitespace-nowrap rounded-full bg-[#289685] px-6 py-2.5 text-[15px] font-medium leading-none tracking-[-0.03em] text-[#fcfcfd] transition-colors hover:bg-[#1e7a6c]"
@@ -312,7 +312,7 @@ export function Header() {
           <div className="flex flex-col gap-4">
             {NAV_ITEMS.map((item) => {
               const active = item.isRoute ? location.pathname === item.href : isOnResourcesPage;
-              const linkCls = `text-[20px] leading-7 transition-colors duration-200 font-['Helvetica_Neue',sans-serif] ${
+              const linkCls = `text-[16px] leading-6 transition-colors duration-200 font-['Helvetica_Neue',sans-serif] ${
                 active ? 'text-[#289685] font-semibold' : 'text-[#1e1f24]'
               }`;
               return item.isRoute ? (
@@ -367,15 +367,15 @@ export function Header() {
 
           {/* CTA buttons */}
           <div className="mt-10 flex flex-col gap-3">
-            <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-              <button className="relative w-full rounded-full py-[14px] text-[18px] font-medium tracking-[-0.04em] text-[#1e1f24] transition-colors hover:bg-black/5"
+            <a href="https://core.kotulapay.com/office" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)}>
+              <button className="relative w-full rounded-full py-[14px] text-[15px] font-medium tracking-[-0.03em] text-[#1e1f24] transition-colors hover:bg-black/5"
                 style={{ fontFeatureSettings: '"calt" 0, "liga" 0' }}>
                 Sign In
                 <span className="pointer-events-none absolute inset-0 rounded-full border-2 border-[#cdced7]" />
               </button>
-            </Link>
+            </a>
             <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-              <button className="w-full rounded-full bg-[#289685] py-[14px] text-[18px] font-medium tracking-[-0.04em] text-[#1e1f24] transition-colors hover:bg-[#1e7a6c]"
+              <button className="w-full rounded-full bg-[#289685] py-[14px] text-[15px] font-medium tracking-[-0.03em] text-[#1e1f24] transition-colors hover:bg-[#1e7a6c]"
                 style={{ fontFeatureSettings: '"calt" 0, "liga" 0' }}>
                 Get Started
               </button>

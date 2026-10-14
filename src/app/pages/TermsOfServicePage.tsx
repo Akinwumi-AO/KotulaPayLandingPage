@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { PageMeta } from '../components/PageMeta';
 import { AnimatePresence, motion } from 'motion/react';
 import { FileText, ChevronDown, Menu, X } from 'lucide-react';
 import { TermsHeader } from '../components/docs/TermsHeader';
@@ -234,6 +235,11 @@ export default function TermsOfServicePage() {
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-[#0d1117]' : 'bg-white'}`}>
+      <PageMeta
+        title="Terms of Service | Kotulapay"
+        description="Review the Kotulapay Terms of Service governing your use of our payment platform and services."
+        canonical="https://kotulapay.com/terms-of-service"
+      />
       <TermsHeader isDarkMode={isDarkMode} onToggleDarkMode={() => setIsDarkMode(!isDarkMode)} />
 
       {/* Mobile Fixed Section Nav */}

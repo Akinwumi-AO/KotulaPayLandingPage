@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect, useRef } from 'react';
+import { PageMeta } from '../components/PageMeta';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
@@ -82,6 +83,11 @@ export default function BrandGuidelinePage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <PageMeta
+        title="Brand Guidelines | Kotulapay"
+        description="Explore the official Kotulapay brand guidelines including logo usage, colours, and typography."
+        canonical="https://kotulapay.com/brand-guidelines"
+      />
       <Header />
 
       {/* Hero Section */}

@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { PageMeta } from '../components/PageMeta';
 import { Shield, Target, Award, Cpu, Globe, Headphones, ArrowRight } from 'lucide-react';
 
 export function AboutPage() {
@@ -54,6 +55,11 @@ export function AboutPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <PageMeta
+        title="About Us | Kotulapay"
+        description="Learn about Kotulapay — our mission, team, and vision for transforming digital payments across Africa."
+        canonical="https://kotulapay.com/about"
+      />
       <Header />
 
       {/* Hero */}
