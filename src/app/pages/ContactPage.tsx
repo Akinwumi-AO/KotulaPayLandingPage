@@ -147,7 +147,7 @@ export function ContactPage() {
               <div className="rounded-2xl bg-[#e5f2f6] px-7 py-6 mt-2">
                 <h3 className="mb-2 text-lg font-semibold text-[#1d3b32]">Location</h3>
                 <p className="text-sm text-[#62636c] leading-relaxed">
-                  Kotulapay is built for African businesses and operates across multiple markets including Kenya, Nigeria, Ghana, Uganda, Tanzania, and more.
+                  Haven court, B6, Waiyaki Way, Nairobi
                 </p>
               </div>
             </div>
